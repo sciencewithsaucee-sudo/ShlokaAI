@@ -6,6 +6,7 @@ authors:
     orcid: "https://orcid.org/0009-0004-7835-0673"
 title: "ShlokaAI: The Smart Sanskrit Analysis Platform"
 version: "1.0.0"
+doi: 10.5281/zenodo.17506828
 type: software
 license: MIT
 keywords:
@@ -21,3 +22,4 @@ repository-code: "https://github.com/sciencewithsaucee-sudo/ShlokaAI"
 url: "https://www.amidhaayurveda.com/p/shloka-ai.html"
 abstract: "An interactive web tool to build custom concept maps, analyze raw Sanskrit text, and automatically classify shlokas against Ayurvedic principles."
 date-released: "2025-11-02"
+
