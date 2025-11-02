@@ -1,5 +1,5 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17506828.svg)](https://doi.org/10.5281/zenodo.17506828)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC--BY--4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Open Source](https://badgen.net/badge/status/open%20source/green)
 ![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 
@@ -132,4 +132,4 @@ This project is licensed in two parts:
 
 **Software Code:** All code in this repository (e.g., .js, .html, .css files) is licensed under the [MIT License](https://opensource.org/license/MIT). This makes the code open and reusable while limiting liability.
 
-**Documentation & Content:** All documentation (like this README.md) and data files are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0). This ensures you must give appropriate credit (cite the DOI) when using this work.
+**Documentation & Content:** All documentation (like this README.md) and data files are licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). This ensures you must give appropriate credit (cite the DOI) when using this work.
