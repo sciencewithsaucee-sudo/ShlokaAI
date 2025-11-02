@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="Sanskrit Analysis, Shloka Classifier, Ayurveda Research, Digital Ayurveda, BAMS Student, Sparsh Varshney, Dosha, Dhatu, Guna, Text Analysis">
+    <meta name="author" content="Sparsh Varshney">
+
+    <!-- Modern Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js library for the dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Professional CSS (v19.8) -->
+    <style>
+        :root {
+            --color-primary: #006400; /* Dark Green */
+            --color-primary-dark: #004d00;
+            --color-secondary: #1E40AF; /* Blue */
+            --color-secondary-dark: #1E3A8A;
+            --color-danger: #B91C1C; /* Red */
+            --color-danger-dark: #991B1B;
+            --color-neutral: #6B7280; /* Medium Gray */
+            --color-neutral-dark: #4B5563;
+            --color-text-dark: #111827; /* Near Black */
+            --color-text-body: #374151; /* Dark Gray */
+            --color-text-light: #6B7280; /* Medium Gray */
+            --color-bg-light: #f9fafb; /* Very Light Gray */
+            --color-bg-white: #ffffff;
+            --color-border: #e5e7eb; /* Light Gray Border */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --radius-sm: 4px;
+            --radius-md: 6px; 
+            --radius-lg: 8px;
+            --side-padding: 1rem;
+        }
+        @media (min-width: 769px) {
+            :root { --side-padding: 1.5rem; }
+        }
+
+        /* Base Reset & Smooth Scroll */
+        html, body {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            margin: 0;
+            background: var(--color-bg-light);
+            color: var(--color-text-body); 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.65; 
+            padding: 0 var(--side-padding); /* Apply side padding */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            display: flex; align-items: center; text-align: center;
+            padding: 4rem 1rem; 
+            background-color: #e8f5e9; /* Light green */
+            border-bottom: 1px solid var(--color-border);
+            margin: 0 calc(-1 * var(--side-padding)); /* Stretch full width */
+            margin-bottom: 2rem; 
+        }
+        .hero-content { 
+            max-width: 800px;
+            margin: 0 auto; 
+            padding: 0 1rem; 
+        }
+        .hero-content h1 { 
+            font-size: clamp(2rem, 5vw, 2.8rem); 
+            color: var(--color-text-dark); 
+            font-weight: 700; margin: 0 0 1rem 0; line-height: 1.25;
+            border: none; padding: 0;
+        }
+        .hero-content p { 
+            font-size: 1.15rem; font-weight: 400; color: var(--color-text-body);
+            margin: 0 0 1.75rem 0;
+        }
+        
+        /* --- Hero Buttons --- */
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* --- CSS FIX: Force outline style for lang button --- */
+        #lang-toggle-btn {
+            background: var(--color-bg-white) !important; /* FORCE white background */
+            color: var(--color-primary) !important;
+            border-color: var(--color-primary);
+        }
+        #lang-toggle-btn span {
+             color: var(--color-primary) !important; /* FORCE span text color */
+        }
+        #lang-toggle-btn:hover {
+            background: #f0fff0 !important; /* FORCE light green background on hover */
+            border-color: var(--color-primary-dark);
+            color: var(--color-primary-dark) !important;
+        }
+        #lang-toggle-btn:hover span {
+             color: var(--color-primary-dark) !important;
+        }
+
+        
+        /* --- Main Container & Typography --- */
+        .main-container {
+            max-width: 1000px; /* Centered, single column */
+            margin: 0 auto;
+            padding-bottom: 3rem; 
+            flex-grow: 1;
+            width: 100%;
+        }
+        h1, h2, h3 {
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 10px;
+            color: var(--color-text-dark);
+            font-weight: 600;
+        }
+        h1 { text-align: center; margin-top: 0; }
+        h2 { margin-top: 1rem; }
+        h3 { margin-top: 25px; border-bottom: none; font-size: 1.2em; }
+
+        /* --- Card Layout --- */
+        .card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-top: 1.5rem;
+        }
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .card-header h2 {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-body-grid {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile first */
+            gap: 2rem;
+        }
+        @media (min-width: 769px) {
+            .card-body-grid {
+                grid-template-columns: 1fr 1fr; /* 2-col on desktop */
+            }
+        }
+
+        /* --- Inputs, Selects, Textareas --- */
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        textarea:focus, input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0,100,0,0.15); 
+        }
+        textarea { height: 200px; }
+        select { background-color: var(--color-bg-white); }
+        label {
+            display: block;
+            font-weight: 500;
+            color: var(--color-text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* --- Button System --- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn:disabled {
+            background: #D1D5DB; color: var(--color-text-light);
+            cursor: not-allowed; transform: none; box-shadow: none;
+        }
+        .btn-primary { background: var(--color-primary); border-color: var(--color-primary); }
+        .btn-primary:hover:not(:disabled) { background: var(--color-primary-dark); border-color: var(--color-primary-dark); }
+        .btn-secondary { background: var(--color-secondary); border-color: var(--color-secondary); }
+        .btn-secondary:hover:not(:disabled) { background: var(--color-secondary-dark); border-color: var(--color-secondary-dark); }
+        .btn-danger { background: var(--color-danger); border-color: var(--color-danger); }
+        .btn-danger:hover:not(:disabled) { background: var(--color-danger-dark); border-color: var(--color-danger-dark); }
+        .btn-neutral { background: var(--color-neutral); border-color: var(--color-neutral); }
+        .btn-neutral:hover:not(:disabled) { background: var(--color-neutral-dark); border-color: var(--color-neutral-dark); }
+        .btn-outline {
+            background: var(--color-bg-white);
+            color: var(--color-neutral-dark);
+            border-color: var(--color-border);
+        }
+        .btn-outline:hover:not(:disabled) {
+            background: var(--color-bg-light);
+            border-color: var(--color-neutral);
+        }
+
+        .button-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .button-group-no-wrap { display: flex; flex-wrap: nowrap; gap: 10px; }
+        
+        /* --- Classify Button --- */
+        .classify-button-container {
+            margin-top: 2rem;
+            text-align: center;
+            border-top: 1px dashed var(--color-border);
+            padding-top: 2rem;
+        }
+        #processButton {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* --- Loading Spinner --- */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinner {
+            display: none; /* Hidden by default */
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .btn-loading {
+            position: relative;
+        }
+        .btn-loading .spinner {
+            display: inline-block;
+        }
+        /* .btn-loading .btn-text {
+            display: none;
+        } */
+        
+        /* --- Config Section --- */
+        #keywordJsonOutput { height: 200px; background-color: var(--color-bg-light); font-family: monospace; font-size: 13px; }
+        #conceptList { margin-top: 15px; max-height: 150px; overflow-y: auto; }
+        
+        .concept-tag {
+            display: inline-block; background-color: #eee; color: #555;
+            padding: 5px 12px; border-radius: 15px; font-size: 0.9em;
+            margin-right: 5px; margin-bottom: 5px;
+        }
+        .concept-tag button {
+            background: none; border: none; color: var(--color-danger); font-weight: bold;
+            font-size: 1.1em; cursor: pointer; padding: 0 0 0 5px; margin-left: 2px;
+        }
+
+        /* --- Template Checkbox Dropdown --- */
+        .template-dropdown-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--color-bg-white);
+            cursor: pointer;
+            text-align: left;
+            color: var(--color-text-body);
+        }
+        .template-dropdown-btn:focus, .template-dropdown-btn:hover {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0,100,0,0.15); 
+        }
+        .template-dropdown-btn svg {
+            transition: transform 0.2s ease;
+        }
+        .template-checkbox-container {
+            border: 1px solid var(--color-border);
+            border-top: none; /* Attached to button */
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            padding: 10px;
+            margin-top: -5px; /* Connect to button */
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--color-bg-white);
+        }
+        .template-checkbox-item {
+            display: flex; /* Use flex for alignment */
+            align-items: center;
+            padding: 8px 5px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            font-weight: 400; /* Match original label style */
+            margin-bottom: 0; /* Override label margin */
+        }
+        .template-checkbox-item:hover {
+            background-color: var(--color-bg-light);
+        }
+        .template-checkbox-item input[type="checkbox"] {
+            width: auto; /* Override default */
+            margin-right: 8px;
+            accent-color: var(--color-primary);
+        }
+        /* --- End New Template Styles --- */
+
+
+        /* --- Error Handling --- */
+        .error-message {
+            color: var(--color-danger);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: none; /* Hidden by default */
+            margin-top: 5px;
+        }
+        .required-marker {
+            color: var(--color-danger);
+            font-weight: bold;
+            margin-left: 2px;
+        }
+        
+        /* --- Analysis Summary Card --- */
+        .summary-card {
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .summary-item {
+            background-color: var(--color-bg-light);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            border: 1px solid var(--color-border);
+        }
+        .summary-item-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text-light);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .summary-item-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        .summary-item-value.dark {
+             color: var(--color-text-dark); /* For non-primary stats */
+        }
+
+        /* --- Dashboard & Results --- */
+        #results-area {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--color-border);
+        }
+        #dashboardContainer {
+            padding: 20px;
+            background: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            margin-bottom: 1.5rem; /* Separated from results */
+            height: 350px;
+            box-shadow: var(--shadow-sm);
+        }
+        .results-header {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 15px; margin-top: 20px;
+        }
+        #filterInput { width: 300px; }
+        #shlokaCount { font-size: 1.1em; font-weight: 600; color: var(--color-text-dark); }
+        
+        /* --- Pagination --- */
+        .pagination-controls {
+            display: flex; justify-content: center; align-items: center;
+            gap: 15px; margin-top: 20px;
+        }
+        #pageInfo { font-weight: 500; font-size: 0.9em; color: var(--color-text-light); }
+
+        /* --- Table Styles --- */
+        #resultsTableContainer {
+            overflow-x: auto; margin-top: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            background: var(--color-bg-white);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td {
+            border-bottom: 1px solid var(--color-border);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.9rem;
+            word-break: normal;
+            overflow-wrap: break-word;
+        }
+        th {
+            background-color: var(--color-bg-light);
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: var(--color-bg-light); }
+        
+        /* --- Clickable Table Row --- */
+        #resultsBody tr {
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+        #resultsBody tr:hover {
+            background-color: #f0fdf4; /* Light green hover */
+        }
+
+        mark {
+            background-color: #fffb91;
+            padding: 2px 3px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .hidden { display: none; }
+        
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .modal-overlay.hidden {
+            display: none;
+        }
+        .modal-content {
+            background: var(--color-bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            line-height: 1;
+            color: var(--color-neutral);
+            cursor: pointer;
+            padding: 0;
+        }
+        .modal-close-btn:hover {
+            color: var(--color-text-dark);
+        }
+        .modal-content h3 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 10px;
+            color: var(--color-primary);
+        }
+        .modal-content p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background: var(--color-bg-light);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            word-wrap: break-word;
+        }
+        .modal-content p.shloka-context-before,
+        .modal-content p.shloka-context-after {
+            background: var(--color-bg-white);
+            color: var(--color-text-light);
+            font-style: italic;
+            border-style: dashed;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .modal-content p.shloka-main {
+             border-color: var(--color-primary);
+             border-width: 1px;
+             box-shadow: var(--shadow-sm);
+        }
+
+        .modal-content .modal-label {
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .modal-content .modal-detail {
+             font-size: 1rem;
+             color: var(--color-text-body);
+        }
+
+        /* --- New SEO/Footer Section Styles --- */
+        .seo-section {
+            margin-top: 3rem;
+            padding-top: 1rem;
+        }
+        .seo-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.75rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        .seo-section h2:first-of-type {
+            margin-top: 0;
+        }
+        .seo-section h3 {
+             font-size: 1.1rem;
+             font-weight: 600;
+             color: var(--color-text-dark);
+             border-bottom: none;
+             margin-top: 1.5rem;
+             margin-bottom: 0.5rem;
+        }
+        .seo-section p, .seo-section li {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--color-text-body);
+            word-break: break-word; /* Fix for long text like emails */
+        }
+        /* --- Fix for mobile list indentation --- */
+        .seo-section ol, .seo-section ul {
+            padding-left: 1.5rem; /* Reduce default browser padding */
+            margin-left: 0;
+        }
+        .seo-section li {
+            margin-bottom: 0.5rem; /* Add space between list items */
+        }
+        .seo-section ul li ul {
+            padding-left: 1.25rem; /* Indent nested lists a bit less */
+            margin-top: 0.5rem;
+        }
+        /* --- End fix --- */
+        .seo-section a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .seo-section a:hover {
+            color: var(--color-primary-dark);
+            text-decoration: underline;
+        }
+        .seo-section .creator-info {
+            background-color: var(--color-bg-light);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+        }
+        .seo-section .creator-info p {
+            margin: 0.5rem 0;
+            word-break: break-word; /* Ensure wrapping in this block too */
+        }
+
+
+        @media (max-width: 900px) {
+            .results-header { flex-direction: column; align-items: stretch; }
+            #filterInput { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .results-header .button-group {
+                 flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden file inputs -->
+    <input type="file" id="loadMapInput" accept=".json" style="display: none;">
+    <input type="file" id="loadTextInput" accept=".txt" style="display: none;">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 data-lang-key="heroTitle">ShlokaAI</h1>
+            <p data-lang-key="heroSubtitle">The Smart Sanskrit Analysis Platform. Classify shlokas by concept, analyze texts, and build datasets for digital Ayurveda research.</p>
+            <div class="hero-buttons">
+                <a href="#step-1-card" class="btn btn-primary" id="start-analysis-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;"><path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm11.5 0a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1h11zM8 4a.5.5 0 0 1 .5.5v3.5h3.5a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8.5H4a.5.5 0 0 1 0-1h3.5V4.5A.5.5 0 0 1 8 4z" transform="translate(0 0) scale(1)"/></svg>
+                    <span data-lang-key="startAnalysisBtn">Get Started</span>
+                </a>
+                <button id="lang-toggle-btn" class="btn btn-outline" style="background-color: white;">
+                    <span data-lang-key="langToggle">हिन्दी</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-container" id="tool-start">
+        
+        <!-- Step 1 Card -->
+        <section class="card" id="step-1-card">
+            <div class="card-header">
+                <h2 data-lang-key="step1Title">Step 1: Configure Your Analysis</h2>
+            </div>
+            <div class="card-body-grid">
+                <!-- Left Column -->
+                <div>
+                    <!-- Template Checkbox Dropdown -->
+                    <label for="template-toggle-btn" data-lang-key="loadTemplatesLabel">Load Templates</label>
+                    <button id="template-toggle-btn" class="template-dropdown-btn">
+                        <span data-lang-key="templateSelectDefault">--- Select Templates ---</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="transition: transform 0.2s ease;">
+                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708 .708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                    <div id="template-checkbox-container" class="template-checkbox-container hidden">
+                        <!-- Existing Templates -->
+                        <label class="template-checkbox-item"><input type="checkbox" value="all_ayurveda"> <span data-lang-key="templateAllAyurveda">All Ayurveda (Doshas, Dhatus, Gunas, Rasas, Malas)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="doshas"> <span data-lang-key="templateDoshas">Ayurveda - Doshas (3)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="dhatus"> <span data-lang-key="templateDhatus">Ayurveda - Dhatus (7)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="gunas"> <span data-lang-key="templateGunas">Ayurveda - Gunas (20)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="rasas"> <span data-lang-key="templateRasas">Ayurveda - Rasas (6)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="malas"> <span data-lang-key="templateMalas">Ayurveda - Malas (3)</span></label>
+                        <!-- New Templates -->
+                        <label class="template-checkbox-item"><input type="checkbox" value="pancha_mahabhuta"> <span data-lang-key="templatePanchaMahabhuta">Pancha Mahabhuta (5)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="agni"> <span data-lang-key="templateAgni">Agni (Types)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="ojas"> <span data-lang-key="templateOjas">Ojas & Bala</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="ama"> <span data-lang-key="templateAma">Ama (Toxin)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="mind_gunas"> <span data-lang-key="templateMindGunas">Mind Gunas (3)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="dushya"> <span data-lang-key="templateDushya">Dushya (Vitiated elements)</span></label>
+                        <label class="template-checkbox-item"><input type="checkbox" value="chakras"> <span data-lang-key="templateChakras">Yoga - Chakras (7)</span></label>
+                    </div>
+
+                    <button id="loadTemplateButton" class="btn btn-secondary" data-lang-key="loadTemplateBtn" style="margin-top: 1rem;">Add Selected Templates</button>
+                    
+                    <h3 style="margin-top: 20px;" data-lang-key="addConceptTitle">Add a New Concept</h3>
+                    <label for="conceptName" data-lang-key="conceptNameLabel">Concept Name<span class="required-marker">*</span></label>
+                    <input type="text" id="conceptName" data-lang-placeholder="conceptNamePlaceholder" placeholder="e.g., Vata Dosha">
+                    <label for="conceptKeywords" data-lang-key="synonymsLabel">Synonyms (comma-separated)<span class="required-marker">*</span></label>
+                    <input type="text" id="conceptKeywords" data-lang-placeholder="synonymsPlaceholder" placeholder="e.g., वात, वायु, vata, vayu, अनिल">
+                    
+                    <div class="button-group" style="margin-top: 10px;">
+                        <button id="addConceptButton" class="btn btn-primary" data-lang-key="addConceptBtn">Add Concept</button>
+                        <button id="clearConceptInputsButton" class="btn btn-outline" data-lang-key="clearInputsBtn">Clear</button>
+                    </div>
+                    <span class="error-message" id="addConceptError"></span>
+                    <div id="conceptList"></div>
+                </div>
+                <!-- Right Column -->
+                <div>
+                    <h3 style="margin-top: 0;" data-lang-key="saveLoadTitle">Save/Load Map</h3>
+                    <div class="button-group">
+                        <button id="saveMapButton" class="btn btn-neutral" data-lang-key="saveMapBtn">Save Map</button>
+                        <button id="loadMapButton" class="btn btn-outline" data-lang-key="loadMapBtn">Load Map</button>
+                    </div>
+                    <h3 style="margin-top: 30px;" data-lang-key="jsonTitle">Generated JSON</h3>
+                    <textarea id="keywordJsonOutput" readonly></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2 Card -->
+        <section class="card">
+            <div class="card-header">
+                <h2 data-lang-key="step2Title">Step 2: Input Shloka Text</h2>
+            </div>
+            <div class="card-body">
+                <div class="button-group" style="margin-bottom: 15px;">
+                    <button id="uploadTextButton" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+                        <span data-lang-key="uploadBtn">Upload .txt File</span>
+                    </button>
+                </div>
+                <textarea id="textInput" data-lang-placeholder="textInputPlaceholder" placeholder="... or paste your raw shloka text here..."></textarea>
+                <span class="error-message" id="textInputError"></span>
+            </div>
+        </section>
+        
+        <!-- Step 3 Button -->
+        <div class="classify-button-container">
+            <div class="button-group" style="justify-content: center;">
+                <button id="processButton" class="btn btn-primary">
+                    <span class="spinner"></span> 
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
+                    <span class="btn-text" data-lang-key="classifyBtn">Start Analysis</span>
+                </button>
+                <button id="clearButton" class="btn btn-danger" data-lang-key="clearBtn">Clear All</button>
+            </div>
+        </div>
+
+        <!-- Step 4 - Analysis Summary -->
+        <section id="analysis-summary-card" class="card summary-card hidden">
+            <h2 style="margin-top:0;" data-lang-key="summaryTitle">Analysis Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="summary-item-label" data-lang-key="summaryTotalShlokas">Total Shlokas</span>
+                    <span class="summary-item-value dark" id="summary-total-shlokas">0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label" data-lang-key="summaryMatchedShlokas">Shlokas with Matches</span>
+                    <span class="summary-item-value dark" id="summary-matched-shlokas">0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label" data-lang-key="summaryTotalHits">Total Keyword Hits</span>
+                    <span class="summary-item-value dark" id="summary-total-hits">0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-item-label" data-lang-key="summaryTopConcept">Most Frequent Concept</span>
+                    <span class="summary-item-value" id="summary-top-concept">N/A</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5 Results Area -->
+        <section id="results-area" class="hidden">
+            <!-- Dashboard -->
+            <h2 id="dashboardTitle" style="margin-top: 0;" data-lang-key="dashboardTitle">Dashboard</h2>
+            <div id="dashboardContainer">
+                <canvas id="resultsChart"></canvas>
+            </div>
+
+            <!-- Results -->
+            <h2 id="resultsTitle" data-lang-key="resultsTitle">Results</h2>
+            <div id="resultsHeader" class="results-header">
+                <div>
+                    <strong id="shlokaCount" data-lang-key="shlokasFound">0 Shlokas Found</strong>
+                    <input type="text" id="filterInput" data-lang-placeholder="filterPlaceholder" placeholder="Filter results by keyword..." style="margin-left: 20px; min-width: 250px;">
+                </div>
+                <div class="button-group button-group-no-wrap">
+                    <button id="downloadCsvButton" class="btn btn-outline" data-lang-key="downloadCsvBtn">Download CSV</button>
+                    <button id="downloadJsonButton" class="btn btn-outline" data-lang-key="downloadJsonBtn">Download JSON</button>
+                </div>
+            </div>
+            
+            <div id="resultsTableContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-lang-key="tableId">ID</th>
+                            <th data-lang-key="tableShloka">Shloka (Highlighted)</th>
+                            <th data-lang-key="tableTopConcept">Top Concept</th>
+                            <th data-lang-key="tableAllScores">All Scores</th>
+                            <th data-lang-key="tableCharCount">Char Count</th>
+                            <th data-lang-key="tableWordCount">Word Count</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody"></tbody>
+                </table>
+            </div>
+            
+            <div id="paginationControls" class="pagination-controls">
+                <button id="prevPageButton" class="btn btn-neutral" data-lang-key="prevBtn">Previous</button>
+                <span id="pageInfo" data-lang-key="pageInfo">Page 1 of 1</span>
+                <button id="nextPageButton" class="btn btn-neutral" data-lang-key="nextBtn">Next</button>
+            </div>
+        </section>
+
+        <!-- New SEO and Info Section -->
+        <section class="seo-section card">
+            <div class="card-body">
+                <h2>How to Use ShlokaAI</h2>
+                <p>This tool is designed for students, researchers, and enthusiasts of Ayurveda to analyze Sanskrit texts efficiently.</p>
+                <ol>
+                    <li><strong>Step 1: Configure Your Analysis:</strong>
+                        <ul>
+                            <li>Load pre-built templates for common Ayurvedic concepts (Doshas, Dhatus, Gunas, etc.).</li>
+                            <li>Manually add your own concepts and their synonyms (in Devanagari or IAST).</li>
+                            <li>You can save your custom concept map as a JSON file or load a previously saved map.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 2: Input Shloka Text:</strong>
+                        <ul>
+                            <li>Paste your raw Sanskrit text (with dandas । or ॥) into the text area.</li>
+                            <li>Alternatively, you can upload a <code>.txt</code> file containing your text.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 3: Analyze & Review:</strong>
+                        <ul>
+                            <li>Click "Start Analysis". The tool will process your text line by line (splitting by danda or newline).</li>
+                            <li>Review the results in the summary, dashboard, and the detailed table.</li>
+                            <li>You can filter results, click any row to see shloka context, and download your filtered data as CSV or JSON.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>About the Creator</h2>
+                <div class="creator-info">
+                    <p>This tool was created and is maintained by <strong>Sparsh Varshney</strong>, a BAMS Student and Ayurvedic Researcher.</p>
+                    <p>
+                        <strong>ORCID:</strong> <a href="https://orcid.org/0009-0004-7835-0673" target="_blank" rel="noopener">0009-0004-7835-0673</a><br>
+                        <strong>Website:</strong> <a href="https://www.amidhaayurveda.com/p/about.html" target="_blank" rel="noopener">Amidha Ayurveda</a><br>
+                        <strong>Contact:</strong> <a href="mailto:sparsh@amidhaayurveda.com">sparsh@amidhaayurveda.com</a>
+                    </p>
+                </div>
+
+                <h2>Explore More Ayurvedic Resources</h2>
+                <p>ShlokaAI is part of a larger ecosystem of digital tools for Ayurveda. Whether you are a <a href="https://www.amidhaayurveda.com/p/bams-1st-year.html">BAMS 1st Prof</a> student just starting out or a seasoned researcher, you may find these resources helpful:</p>
+                <ul>
+                    <li>Study fundamental concepts in our <a href="https://www.amidhaayurveda.com/p/siddhanta-kosha.html">Siddhanta Kosha</a> or explore detailed herb profiles in the <a href="https://www.amidhaayurveda.com/p/herb-database.html">Herb Database</a>.</li>
+                    <li>Deepen your understanding of disease with the <a href="https://www.amidhaayurveda.com/p/roga-nidana-kosha.html">Roga Nidana Kosha</a>.</li>
+                    <li>Assist your studies with our <a href="https://www.amidhaayurveda.com/p/research-saarthi.html">Research Saarthi</a> tool or find resources for the entire <a href="https://www.amidhaayurveda.com/p/bams-course.html">BAMS Course</a>.</li>
+                    <li>Test your knowledge with our interactive quizzes, such as the <a href="https://www.amidhaayurveda.com/p/know-your-prakriti.html">Prakriti Quiz</a>, <a href="https://www.amidhaayurveda.com/p/agni-assessment-quiz.html">Agni Assessment</a>, or the <a href="https://www.amidhaayurveda.com/p/the-mind-guna-quiz.html">Mind Guna Quiz</a>.</li>
+                    <li>Stay updated with our <a href="https://www.amidhaayurveda.com/p/blog.html">Blog</a> and <a href="https://www.amidhaayurveda.com/p/news.html">News</a>, or <a href="https://www.amidhaayurveda.com/p/contact.html">contact us</a> with your questions.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shloka Detail Modal -->
+    <div id="shloka-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close-btn" title="Close">&times;</button>
+            <h3 data-lang-key="modalTitle">Shloka Details</h3>
+            
+            <div class="modal-label" data-lang-key="modalTopConcept">Top Concept</div>
+            <div class="modal-detail" id="modal-top-concept"></div>
+            
+            <div class="modal-label" data-lang-key="modalAllScores">All Scores</div>
+            <div class="modal-detail" id="modal-all-scores"></div>
+            
+            <div class="modal-label" data-lang-key="modalShlokaContext">Shloka Context</div>
+            <p id="modal-shloka-before" class="shloka-context-before"></p>
+            <p id="modal-shloka-text" class="shloka-main"></p>
+            <p id="modal-shloka-after" class="shloka-context-after"></p>
+            
+            <div class="button-group" style="margin-top: 1.5rem; justify-content: flex-end;">
+                 <button id="modal-copy-btn" class="btn btn-secondary" data-lang-key="modalCopyBtn">Copy Text</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- *** JAVASCRIPT LOGIC (WRAPPED IN DOMCONTENTLOADED) *** -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- Globals ---
+        let conceptMap = {};
+        let processedResults = [];
+        let currentViewResults = [];
+        let currentPage = 1;
+        const ROWS_PER_PAGE = 50;
+        let resultsChart = null;
+        let currentLang = 'en'; // Language state
+
+        // --- Translation Dictionary (v19.8) ---
+        const TRANSLATIONS = {
+            // Hero
+            heroTitle: { en: 'ShlokaAI', hi: '\u0936\u094D\u0932\u094B\u0915AI' },
+            heroSubtitle: { en: 'The Smart Sanskrit Analysis Platform. Classify shlokas by concept, analyze texts, and build datasets for digital Ayurveda research.', hi: '\u0938\u094D\u092E\u093E\u0930\u094D\u091F \u0938\u0902\u0938\u094D\u0915\u0943\u0924 \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923 \u092E\u0902\u091A\u0964 \u0905\u0935\u0927\u093E\u0930\u0923\u093E \u0915\u0947 \u0906\u0927\u093E\u0930 \u092A\u0930 \u0936\u094D\u0932\u094B\u0915\u094B\u0902 \u0915\u094B \u0935\u0930\u094D\u0917\u0940\u0915\u0943\u0924 \u0915\u0930\u0947\u0902, \u0917\u094D\u0930\u0902\u0925\u094B\u0902 \u0915\u093E \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923 \u0915\u0930\u0947\u0902 \u0914\u0930 \u0921\u093F\u091C\u093F\u091F\u0932 \u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 \u0905\u0928\u0941\u0938\u0902\u0927\u093E\u0928 \u0915\u0947 \u0932\u093F\u090F \u0921\u0947\u091F\u093E\u0938\u0947\u091F \u092C\u0928\u093E\u090F\u0902\u0964' },
+            startAnalysisBtn: { en: 'Get Started', hi: '\u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902' },
+            langToggle: { en: '\u0939\u093F\u0928\u094D\u0926\u0940', hi: 'English' },
+            
+            // Step 1
+            step1Title: { en: 'Step 1: Configure Your Analysis', hi: '\u091A\u0930\u0923 1: \u0905\u092A\u0928\u093E \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923 \u0915\u0949\u0928\u094D\u092B\u093F\u0917\u0930 \u0915\u0930\u0947\u0902' },
+            loadTemplatesLabel: { en: 'Load Templates', hi: '\u091F\u0947\u092E\u094D\u092A\u0932\u0947\u091F \u0932\u094B\u0921 \u0915\u0930\u0947\u0902' },
+            templateSelectDefault: { en: '--- Select Templates ---', hi: '--- \u091F\u0947\u092E\u094D\u092A\u0932\u0947\u091F \u091A\u0941\u0928\u0947\u0902 ---' },
+            templateAllAyurveda: { en: 'All Ayurveda (Doshas, Dhatus, Gunas, Rasas, Malas)', hi: '\u0938\u092D\u0940 \u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 (\u0926\u094B\u0937, \u0927\u093E\u0924\u0941, \u0917\u0941\u0923, \u0930\u0938, \u092E\u0932)' },
+            templateDoshas: { en: 'Ayurveda - Doshas (3)', hi: '\u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 - \u0926\u094B\u0937 (3)' },
+            templateDhatus: { en: 'Ayurveda - Dhatus (7)', hi: '\u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 - \u0927\u093E\u0924\u0941 (7)' },
+            templateGunas: { en: 'Ayurveda - Gunas (20)', hi: '\u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 - \u0917\u0941\u0923 (20)' },
+            templateRasas: { en: 'Ayurveda - Rasas (6)', hi: '\u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 - \u0930\u0938 (6)' },
+            templateMalas: { en: 'Ayurveda - Malas (3)', hi: '\u0906\u092F\u0941\u0930\u094D\u0935\u0947\u0926 - \u092E\u0932 (3)' },
+            templatePanchaMahabhuta: { en: 'Pancha Mahabhuta (5)', hi: '\u092A\u0902\u091A \u092E\u0939\u093E\u092D\u0942\u0924 (5)' },
+            templateAgni: { en: 'Agni (Types)', hi: '\u0905\u0917\u094D\u0928\u093F (\u092A\u094D\u0930\u0915\u093E\u0930)' },
+            templateOjas: { en: 'Ojas & Bala', hi: '\u0913\u091C\u0938 \u0914\u0930 \u092C\u0932' },
+            templateAma: { en: 'Ama (Toxin)', hi: '\u0906\u092E (\u0935\u093F\u0937)' },
+            templateMindGunas: { en: 'Mind Gunas (3)', hi: '\u092E\u093E\u0928\u0938\u093F\u0915 \u0917\u0941\u0923 (3)' },
+            templateDushya: { en: 'Dushya (Vitiated elements)', hi: '\u0926\u0942\u0937\u094D\u092F (\u0926\u0942\u0937\u093F\u0924 \u0924\u0924\u094D\u0935)' },
+            templateChakras: { en: 'Yoga - Chakras (7)', hi: '\u092F\u094B\u0917 - \u091A\u0915\u094D\u0930 (7)' },
+            loadTemplateBtn: { en: 'Add Selected Templates', hi: '\u091A\u0941\u0928\u0947 \u091F\u0947\u092E\u094D\u092A\u0932\u0947\u091F \u091C\u094B\u0921\u093C\u0947\u0902' },
+            addConceptTitle: { en: 'Add a New Concept', hi: '\u090F\u0915 \u0928\u0908 \u0905\u0935\u0927\u093E\u0930\u0923\u093E \u091C\u094B\u0921\u093C\u0947\u0902' },
+            conceptNameLabel: { en: 'Concept Name', hi: '\u0905\u0935\u0927\u093E\u0930\u0923\u093E \u0915\u093E \u0928\u093E\u092E' },
+            conceptNamePlaceholder: { en: 'e.g., Vata Dosha', hi: '\u091C\u0948\u0938\u0947, \u0935\u093E\u0924 \u0926\u094B\u0937' },
+            synonymsLabel: { en: 'Synonyms (comma-separated)', hi: '\u0938\u092E\u093E\u0928\u093E\u0930\u094D\u0925\u0940 (\u0905\u0932\u094D\u092A\u0935\u093F\u0930\u093E\u092E \u0938\u0947 \u0905\u0932\u0917)' },
+            synonymsPlaceholder: { en: 'e.g., वात, वायु, vata, vayu, अनिल', hi: '\u091C\u0948\u0938\u0947, \u0935\u093E\u0924, \u0935\u093E\u092F\u0941, vata, vayu, \u0905\u0928\u093F\u0932' },
+            addConceptBtn: { en: 'Add Concept', hi: '\u0905\u0935\u0927\u093E\u0930\u0923\u093E \u091C\u094B\u0921\u093C\u0947\u0902' },
+            clearInputsBtn: { en: 'Clear', hi: '\u0938\u093E\u092B\u093C \u0915\u0930\u0947\u0902' },
+            saveLoadTitle: { en: 'Save/Load Map', hi: '\u092E\u0948\u092A \u0938\u0939\u0947\u091C\u0947\u0902/\u0932\u094B\u0921 \u0915\u0930\u0947\u0902' },
+            saveMapBtn: { en: 'Save Map', hi: '\u092E\u0948\u092A \u0938\u0939\u0947\u091C\u0947\u0902' },
+            loadMapBtn: { en: 'Load Map', hi: '\u092E\u0948\u092A \u0932\u094B\u0921 \u0915\u0930\u0947\u0902' },
+            jsonTitle: { en: 'Generated JSON', hi: '\u0909\u0924\u094D\u092A\u0928\u094D\u0928 JSON' },
+
+            // Step 2
+            step2Title: { en: 'Step 2: Input Shloka Text', hi: '\u091A\u0930\u0923 2: \u0936\u094D\u0932\u094B\u0915 \u091F\u0947\u0915\u094D\u0938\u094D\u091F \u0907\u0928\u092A\u0941\u091F \u0915\u0930\u0947\u0902' },
+            uploadBtn: { en: 'Upload .txt File', hi: '.txt \u092B\u093C\u093E\u0907\u0932 \u0905\u092A\u0932\u094B\u0921 \u0915\u0930\u0947\u0902' },
+            textInputPlaceholder: { en: '... or paste your raw shloka text here...', hi: '... \u092F\u093E \u0905\u092A\u0928\u093E \u0915\u091A\u094D\u091A\u093E \u0936\u094D\u0932\u094B\u0915 \u091F\u0947\u0915\u094D\u0938\u094D\u091F \u092F\u0939\u093E\u0902 \u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0947\u0902...' },
+
+            // Step 3
+            classifyBtn: { en: 'Start Analysis', hi: '\u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923 \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902' },
+            processingBtn: { en: 'Processing...', hi: '\u092A\u094D\u0930\u094B\u0938\u0947\u0938 \u0915\u093F\u092F\u093E \u091C\u093E \u0930\u0939\u093E \u0939\u0948...' },
+            clearBtn: { en: 'Clear All', hi: '\u0938\u092C \u0938\u093E\u092B\u093C \u0915\u0930\u0947\u0902' },
+
+            // Summary Card
+            summaryTitle: { en: 'Analysis Summary', hi: '\u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923 \u0938\u093E\u0930\u093E\u0902\u0936' },
+            summaryTotalShlokas: { en: 'Total Shlokas', hi: '\u0915\u0941\u0932 \u0936\u094D\u0932\u094B\u0915' },
+            summaryMatchedShlokas: { en: 'Shlokas with Matches', hi: '\u092E\u093F\u0932\u093E\u0928 \u0935\u093E\u0932\u0947 \u0936\u094D\u0932\u094B\u0915' },
+            summaryTotalHits: { en: 'Total Keyword Hits', hi: '\u0915\u0941\u0932 \u0915\u0940\u0935\u0930\u094D\u0921 \u0939\u093F\u091F' },
+            summaryTopConcept: { en: 'Most Frequent Concept', hi: '\u0938\u092C\u0938\u0947 \u0905\u0927\u093F\u0915 \u0905\u0935\u0927\u093E\u0930\u0923\u093E' },
+            
+            // Step 4 - Results
+            dashboardTitle: { en: 'Dashboard', hi: '\u0921\u0948\u0936\u092C\u094B\u0930\u094D\u0921' },
+            resultsTitle: { en: 'Results', hi: '\u092A\u0930\u093F\u0923\u093E\u092E' },
+            shlokasFound: { en: 'Shlokas Found', hi: '\u0936\u094D\u0932\u094B\u0915 \u092E\u093F\u0932\u0947' },
+            filterPlaceholder: { en: 'Filter results by keyword...', hi: '\u0915\u0940\u0935\u0930\u094D\u0921 \u0926\u094D\u0935\u093E\u0930\u093E \u092A\u0930\u093F\u0923\u093E\u092E \u092B\u093F\u0932\u094D\u091F\u0930 \u0915\u0930\u0947\u0902...' },
+            downloadCsvBtn: { en: 'Download CSV', hi: 'CSV \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0947\u0902' },
+            downloadJsonBtn: { en: 'Download JSON', hi: 'JSON \u0921\u093E\u0909\u0928\u0932\u094B\u0921 \u0915\u0930\u0947\u0902' },
+            tableId: { en: 'ID', hi: 'ID' },
+            tableShloka: { en: 'Shloka (Highlighted)', hi: '\u0936\u094D\u0932\u094B\u0915 (\u0939\u093E\u0907\u0932\u093E\u0907\u091F\u0947\u0921)' },
+            tableTopConcept: { en: 'Top Concept', hi: '\u0936\u0940\u0930\u094D\u0937 \u0905\u0935\u0927\u093E\u0930\u0923\u093E' },
+            tableAllScores: { en: 'All Scores', hi: '\u0938\u092D\u0940 \u0938\u094D\u0915\u094B\u0930' },
+            tableCharCount: { en: 'Char Count', hi: '\u0905\u0915\u094D\u0937\u0930 \u0917\u0923\u0928\u093E' },
+            tableWordCount: { en: 'Word Count', hi: '\u0936\u092C\u094D\u0926 \u0917\u0923\u0928\u093E' },
+            prevBtn: { en: 'Previous', hi: '\u092A\u093F\u091B\u0932\u093E' },
+            nextBtn: { en: 'Next', hi: '\u0905\u0917\u0932\u093E' },
+            page: { en: 'Page', hi: '\u092A\u0943\u0937\u094D\u0920' },
+            of: { en: 'of', hi: '\u092E\u0947\u0902 \u0938\u0947' },
+
+            // Modal
+            modalTitle: { en: 'Shloka Details', hi: '\u0936\u094D\u0932\u094B\u0915 \u0935\u093F\u0935\u0930\u0923' },
+            modalTopConcept: { en: 'Top Concept', hi: '\u0936\u0940\u0930\u094D\u0937 \u0905\u0935\u0927\u093E\u0930\u0923\u093E' },
+            modalAllScores: { en: 'All Scores', hi: '\u0938\u092D\u0940 \u0938\u094D\u0915\u094B\u0930' },
+            modalShlokaContext: { en: 'Shloka Context', hi: '\u0936\u094D\u0932\u094B\u0915 \u0938\u0902\u0926\u0930\u094D\u092D' },
+            modalCopyBtn: { en: 'Copy Text', hi: '\u091F\u0947\u0915\u094D\u0938\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902' },
+
+            // Errors
+            errorConceptName: { en: '* Please enter both a Concept Name and at least one Synonym.', hi: '* \u0915\u0943\u092A\u092F\u093E \u0905\u0935\u0927\u093E\u0930\u0923\u093E \u0915\u093E \u0928\u093E\u092E \u0914\u0930 \u0915\u092E \u0938\u0947 \u0915\u092E \u090F\u0915 \u0938\u092E\u093E\u0928\u093E\u0930\u094D\u0925\u0940 \u0936\u092C\u094D\u0926 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964' },
+            errorSynonyms: { en: '* Please enter valid, comma-separated synonyms.', hi: '* \u0915\u0943\u092A\u092F\u093E \u0935\u0948\u0927, \u0905\u0932\u094D\u092A\u0935\u093F\u0930\u093E\u092E \u0938\u0947 \u0905\u0932\u0917 \u0938\u092E\u093E\u0928\u093E\u0930\u094D\u0925\u0940 \u0936\u092C\u094D\u0926 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964' },
+            errorMapEmpty: { en: '* Concept map is empty. Add some concepts first.', hi: '* \u0905\u0935\u0927\u093E\u0930\u0923\u093E \u092E\u0948\u092A \u0916\u093E\u0932\u0940 \u0939\u0948\u0964 \u092A\u0939\u0932\u0947 \u0915\u0941\u091B \u0905\u0935\u0927\u093E\u0930\u0923\u093E\u090F\u0902 \u091C\u094B\u0921\u093C\u0947\u0902\u0964' },
+            errorLoadMap: { en: 'Error loading map: Invalid JSON file.', hi: '\u092E\u0948\u092A \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0924\u094D\u0930\u0941\u091F\u093F: \u0905\u092E\u093E\u0928\u094D\u092F JSON \u092B\u093C\u093E\u0907\u0932\u0964' },
+            errorNoText: { en: '* Please paste text or upload a .txt file.', hi: '* \u0915\u0943\u092A\u092F\u093E \u091F\u0947\u0915\u094D\u0938\u094D\u091F \u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0947\u0902 \u092F\u093E .txt \u092B\u093C\u093E\u0907\u0932 \u0905\u092A\u0932\u094B\u0921 \u0915\u0930\u0947\u0902\u0964' },
+            errorNoShlokas: { en: '* No shlokas were found (missing dandas or line breaks).', hi: '* \u0915\u094B\u0908 \u0936\u094D\u0932\u094B\u0915 \u0928\u0939\u0940\u0902 \u092E\u093F\u0932\u093E (\u0926\u0902\u0921 \u092F\u093E \u0932\u093E\u0907\u0928 \u092C\u094D\u0930\u0947\u0915 \u0917\u093E\u092F\u092C \u0939\u0948\u0902)\u0964' },
+            errorCopy: { en: 'Copied to clipboard!', hi: '\u0915\u094D\u0932\u093F\u092A\u092C\u094B\u0930\u094D\u0921 \u092E\u0947\u0902 \u0915\u0949\u092A\u0940 \u0915\u093F\u092F\u093E \u0917\u092F\u093E!' },
+            errorCopyFail: { en: 'Failed to copy.', hi: '\u0915\u0949\u092A\u0940 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932\u0964' }
+        };
+
+        // --- Concept Templates ---
+        const CONCEPT_TEMPLATES = {
+            "doshas": {
+                "Vata Dosha": ["वात", "वायु", "अनिल", "vata", "vayu", "anila"],
+                "Pitta Dosha": ["पित्त", "अग्नि", "pitta", "agni", "tejas"],
+                "Kapha Dosha": ["कफ", "श्लेष्म", "kapha", "shleshma"]
+            },
+            "dhatus": {
+                "Rasa": ["रस", "rasa"], "Rakta": ["रक्त", "rakta"], "Mamsa": ["मांस", "mamsa"],
+                "Meda": ["मेद", "meda", "medas"], "Asthi": ["अस्थि", "asthi"], "Majja": ["मज्जा", "majja"],
+                "Shukra": ["शुक्र", "shukra", "śukra"]
+            },
+            "gunas": {
+                "Guru (Heavy)": ["गुरु", "guru"], "Laghu (Light)": ["लघु", "laghu"],
+                "Shita (Cold)": ["शीत", "śīta", "shita"], "Ushna (Hot)": ["उष्ण", "uṣṇa", "ushna"],
+                "Snigdha (Unctuous)": ["स्निग्ध", "snigdha"], "Ruksha (Dry)": ["रूक्ष", "rūkṣa", "ruksha"],
+                "Manda (Dull)": ["मन्द", "manda"], "Tikshna (Sharp)": ["तीक्ष्ण", "tīkṣṇa", "tikshna"],
+                "Sthira (Static)": ["स्थिर", "sthira"], "Chala (Mobile)": ["चल", "cala", "chala"],
+                "Mrudu (Soft)": [" मृदु", "mridu"], "Kathina (Hard)": ["कठिन", "kathina"],
+                "Vishada (Clear)": ["विशद", "vishada"], "Picchila (Sticky)": ["पिच्छिल", "picchila"],
+                "Shlakshna (Smooth)": ["श्लक्ष्ण", "shlakshna"], "Khara (Rough)": ["खर", "khara"],
+                "Sukshma (Subtle)": ["सूक्ष्म", "sūkṣma", "sukshma"], "Sthula (Gross)": ["स्थूल", "sthūla", "sthula"],
+                "Sandra (Dense)": ["सान्द्र", "sāndra", "sandra"], "Drava (Liquid)": ["द्रव", "drava"]
+            },
+            "rasas": {
+                "Madhura (Sweet)": ["मधुर", "madhura"], "Amla (Sour)": ["अम्ल", "amla"],
+                "Lavana (Salty)": ["लवण", "lavana"], "Katu (Pungent)": ["कटु", "katu"],
+                "Tikta (Bitter)": ["तिक्त", "tikta"], "Kashaya (Astringent)": ["कषाय", "kashaya"]
+            },
+            "malas": {
+                "Purisha (Feces)": ["पुरीष", "purisha", "viṭ", "vit"],
+                "Mutra (Urine)": ["मूत्र", "mutra"],
+                "Sweda (Sweat)": ["स्वेद", "sweda", "sveda"]
+            },
+            "pancha_mahabhuta": {
+                "Akasha": ["आकाश", "ākāśa", "akasha"], "Vayu": ["वायु", "vāyu", "vayu"],
+                "Agni (Mahabhuta)": ["अग्नि", "agni", "tejas"], "Jala": ["जल", "jala", "āp", "ap"],
+                "Prithvi": ["पृथ्वी", "pṛthvī", "prithvi"]
+            },
+            "agni": {
+                "Agni": ["अग्नि", "agni"], "Jatharagni": ["जठराग्नि", "jatharagni"],
+                "Dhatvagni": ["धात्वग्नि", "dhatvagni"], "Bhutagni": ["भूताग्नि", "bhutagni"]
+            },
+            "ojas": {
+                "Ojas": ["ओजस", "ojas", "ojus"], "Bala": ["बल", "bala"]
+            },
+            "ama": {
+                "Ama": ["आम", "āma", "ama"], "Sama": ["साम", "sāma", "sama"]
+            },
+            "mind_gunas": {
+                "Sattva": ["सत्त्व", "sattva"], "Rajas": ["रजस्", "rajas"], "Tamas": ["तमस्", "tamas"]
+            },
+            "dushya": {
+                "Dushya": ["दूष्य", "dūṣya", "dushya"]
+            },
+            "chakras": {
+                "Muladhara": ["मूलाधार", "muladhara"], "Svadhisthana": ["स्वाधिष्ठान", "svadhisthana"],
+                "Manipura": ["मणिपूर", "manipura"], "Anahata": ["अनाहत", "anahata"],
+                "Vishuddha": ["विशुद्ध", "vishuddha"], "Ajna": ["आज्ञा", "ajna"],
+                "Sahasrara": ["सहस्रार", "sahasrara"]
+            }
+        };
+
+        // --- Get DOM Elements ---
+        const addConceptBtn = document.getElementById('addConceptButton');
+        const clearConceptInputsButton = document.getElementById('clearConceptInputsButton');
+        const conceptNameInput = document.getElementById('conceptName');
+        const conceptKeywordsInput = document.getElementById('conceptKeywords');
+        const keywordJsonOutput = document.getElementById('keywordJsonOutput');
+        const conceptListDiv = document.getElementById('conceptList');
+        
+        const templateToggleBtn = document.getElementById('template-toggle-btn');
+        const templateCheckboxContainer = document.getElementById('template-checkbox-container');
+        const loadTemplateBtn = document.getElementById('loadTemplateButton');
+        
+        const saveMapBtn = document.getElementById('saveMapButton');
+        const loadMapBtn = document.getElementById('loadMapButton');
+        const loadMapInput = document.getElementById('loadMapInput');
+        const uploadTextBtn = document.getElementById('uploadTextButton');
+        const loadTextInput = document.getElementById('loadTextInput');
+        const processBtn = document.getElementById('processButton');
+        const clearBtn = document.getElementById('clearButton');
+        const downloadCsvBtn = document.getElementById('downloadCsvButton');
+        const downloadJsonBtn = document.getElementById('downloadJsonButton');
+        const textInput = document.getElementById('textInput');
+        const resultsBody = document.getElementById('resultsBody');
+        const shlokaCountSpan = document.getElementById('shlokaCount');
+        const filterInput = document.getElementById('filterInput');
+        
+        const addConceptError = document.getElementById('addConceptError');
+        const textInputError = document.getElementById('textInputError');
+        
+        const resultsArea = document.getElementById('results-area');
+        const dashboardContainer = document.getElementById('dashboardContainer');
+        const dashboardTitle = document.getElementById('dashboardTitle');
+        const resultsHeader = document.getElementById('resultsHeader');
+        const resultsTitle = document.getElementById('resultsTitle');
+        const resultsTableContainer = document.getElementById('resultsTableContainer');
+        const paginationControls = document.getElementById('paginationControls');
+        const prevPageButton = document.getElementById('prevPageButton');
+        const nextPageButton = document.getElementById('nextPageButton');
+        const pageInfo = document.getElementById('pageInfo');
+
+        const langToggleBtn = document.getElementById('lang-toggle-btn');
+
+        const analysisSummaryCard = document.getElementById('analysis-summary-card');
+        const summaryTotalShlokas = document.getElementById('summary-total-shlokas');
+        const summaryMatchedShlokas = document.getElementById('summary-matched-shlokas');
+        const summaryTotalHits = document.getElementById('summary-total-hits');
+        const summaryTopConcept = document.getElementById('summary-top-concept');
+
+        const shlokaModal = document.getElementById('shloka-modal');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalTopConcept = document.getElementById('modal-top-concept');
+        const modalAllScores = document.getElementById('modal-all-scores');
+        const modalShlokaText = document.getElementById('modal-shloka-text');
+        const modalCopyBtn = document.getElementById('modal-copy-btn');
+        const modalShlokaBefore = document.getElementById('modal-shloka-before');
+        const modalShlokaAfter = document.getElementById('modal-shloka-after');
+
+
+        // --- Attach Event Listeners ---
+        addConceptBtn.addEventListener('click', addConcept);
+        
+        // --- This button now clears inputs AND the concept map ---
+        clearConceptInputsButton.addEventListener('click', () => {
+            conceptNameInput.value = '';
+            conceptKeywordsInput.value = '';
+            addConceptError.style.display = 'none';
+            conceptMap = {}; // Clear the map
+            updateConceptUI(); // Update the UI to show the map is empty
+        });
+        
+        processBtn.addEventListener('click', processText);
+        clearBtn.addEventListener('click', clearAll);
+        downloadCsvBtn.addEventListener('click', () => downloadFile('csv'));
+        downloadJsonBtn.addEventListener('click', () => downloadFile('json'));
+        filterInput.addEventListener('keyup', filterResults);
+        saveMapBtn.addEventListener('click', saveConceptMap);
+        loadMapBtn.addEventListener('click', () => loadMapInput.click());
+        loadMapInput.addEventListener('change', loadConceptMap);
+        uploadTextBtn.addEventListener('click', () => loadTextInput.click());
+        loadTextInput.addEventListener('change', loadTextFile);
+        
+        loadTemplateBtn.addEventListener('click', loadTemplates);
+        templateToggleBtn.addEventListener('click', () => {
+            templateCheckboxContainer.classList.toggle('hidden');
+            const icon = templateToggleBtn.querySelector('svg');
+            icon.style.transform = templateCheckboxContainer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+
+        prevPageButton.addEventListener('click', prevPage);
+        nextPageButton.addEventListener('click', nextPage);
+        langToggleBtn.addEventListener('click', toggleLanguage);
+        
+        conceptListDiv.addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON' && event.target.dataset.conceptName) {
+                removeConcept(event.target.dataset.conceptName);
+            }
+        });
+
+        resultsBody.addEventListener('click', handleTableRowClick);
+        modalCloseBtn.addEventListener('click', hideModal);
+        shlokaModal.addEventListener('click', (event) => {
+            if (event.target === shlokaModal) {
+                hideModal();
+            }
+        });
+        modalCopyBtn.addEventListener('click', copyModalText);
+
+        // --- Language Toggle Function ---
+        function toggleLanguage() {
+            currentLang = (currentLang === 'en') ? 'hi' : 'en';
+            
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (TRANSLATIONS[key] && TRANSLATIONS[key][currentLang]) {
+                    
+                    // This logic preserves child nodes (like SVGs in buttons)
+                    // Find all element nodes that are direct children
+                    const childElements = Array.from(el.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE);
+                    
+                    // Get the new text
+                    const newText = decodeHtmlEntities(TRANSLATIONS[key][currentLang]);
+                    
+                    // Clear the element's content
+                    el.innerHTML = ''; 
+                    
+                    // Re-append the child elements first
+                    childElements.forEach(child => {
+                        el.appendChild(child); 
+                    });
+                    
+                    // Append the new text node after the child elements
+                    el.appendChild(document.createTextNode(newText));
+                }
+            });
+
+            document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                const key = el.dataset.langPlaceholder;
+                if (TRANSLATIONS[key] && TRANSLATIONS[key][currentLang]) {
+                    el.placeholder = decodeHtmlEntities(TRANSLATIONS[key][currentLang]);
+                }
+            });
+            
+            updateDynamicText();
+
+            // Update processing button text if it's in a loading state
+            if(processBtn.disabled) {
+                const textSpan = processBtn.querySelector('.btn-text');
+                if (textSpan) {
+                     textSpan.textContent = decodeHtmlEntities(TRANSLATIONS.processingBtn[currentLang]);
+                }
+            }
+        }
+        
+        // --- Update Dynamic Text ---
+        function updateDynamicText() {
+            if (processedResults.length > 0 || currentViewResults.length > 0) {
+                shlokaCountSpan.textContent = `${currentViewResults.length} ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
+                const totalPages = Math.ceil(currentViewResults.length / ROWS_PER_PAGE);
+                pageInfo.textContent = `${decodeHtmlEntities(TRANSLATIONS.page[currentLang])} ${currentPage} ${decodeHtmlEntities(TRANSLATIONS.of[currentLang])} ${totalPages || 1}`;
+            } else {
+                shlokaCountSpan.textContent = `0 ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
+            }
+            
+            // Update error messages if visible
+            if (addConceptError.style.display === 'block') {
+                const key = addConceptError.dataset.errorKey;
+                if(key) addConceptError.textContent = decodeHtmlEntities(TRANSLATIONS[key][currentLang]);
+            }
+            if (textInputError.style.display === 'block') {
+                 const key = textInputError.dataset.errorKey;
+                 if(key) textInputError.textContent = decodeHtmlEntities(TRANSLATIONS[key][currentLang]);
+            }
+        }
+
+
+        // --- HTML Entity Decoder Function ---
+        function decodeHtmlEntities(str) {
+            if (typeof str !== 'string') return str;
+            // Using a textarea is the standard way to decode HTML entities
+            let textarea = document.createElement('textarea');
+            textarea.innerHTML = str;
+            return textarea.value;
+        }
+
+        // --- 1. Concept Map Functions ---
+        function addConcept() {
+            addConceptError.style.display = 'none';
+            const name = decodeHtmlEntities(conceptNameInput.value.trim());
+            const keywordsStr = decodeHtmlEntities(conceptKeywordsInput.value.trim());
+            
+            if (!name || !keywordsStr) {
+                addConceptError.textContent = TRANSLATIONS.errorConceptName[currentLang];
+                addConceptError.dataset.errorKey = "errorConceptName";
+                addConceptError.style.display = 'block';
+                conceptNameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            
+            const keywords = keywordsStr.split(',').map(k => k.trim()).filter(Boolean);
+            if (keywords.length === 0) {
+                addConceptError.textContent = TRANSLATIONS.errorSynonyms[currentLang];
+                addConceptError.dataset.errorKey = "errorSynonyms";
+                addConceptError.style.display = 'block';
+                conceptKeywordsInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            
+            conceptMap[name] = keywords; 
+            conceptNameInput.value = '';
+            conceptKeywordsInput.value = '';
+            updateConceptUI();
+        }
+        function removeConcept(name) {
+            delete conceptMap[name];
+            updateConceptUI();
+        }
+        
+        function updateConceptUI() {
+            // Decode any \u sequences for display in the textarea
+            let jsonString = JSON.stringify(conceptMap, null, 2);
+            jsonString = jsonString.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
+                return String.fromCharCode(parseInt(grp, 16));
+            });
+            keywordJsonOutput.value = jsonString;
+            
+            conceptListDiv.innerHTML = '';
+            for (const name in conceptMap) {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'concept-tag';
+                tagEl.textContent = name + ' ';
+                const removeBtn = document.createElement('button');
+                removeBtn.title = 'Remove';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.dataset.conceptName = name; 
+                tagEl.appendChild(removeBtn);
+                conceptListDiv.appendChild(tagEl);
+            }
+        }
+
+        // --- Load Templates from Checkboxes ---
+        function loadTemplates() {
+            const checkedTemplates = document.querySelectorAll('#template-checkbox-container input[type="checkbox"]:checked');
+            if (checkedTemplates.length === 0) return;
+
+            let templatesToLoad = [];
+            
+            checkedTemplates.forEach(checkbox => {
+                const templateName = checkbox.value;
+                if (templateName === 'all_ayurveda') {
+                    ['doshas', 'dhatus', 'gunas', 'rasas', 'malas'].forEach(t => {
+                        if (!templatesToLoad.includes(t)) templatesToLoad.push(t);
+                    });
+                } else if (!templatesToLoad.includes(templateName)) {
+                    templatesToLoad.push(templateName);
+                }
+            });
+
+            templatesToLoad.forEach(templateName => {
+                if (templateName && CONCEPT_TEMPLATES[templateName]) {
+                    // Deep copy the template
+                    const rawTemplate = JSON.parse(JSON.stringify(CONCEPT_TEMPLATES[templateName]));
+                    
+                    for (const concept in rawTemplate) {
+                        const decodedName = decodeHtmlEntities(concept);
+                        const decodedKeywords = rawTemplate[concept].map(kw => decodeHtmlEntities(kw));
+                        
+                        // Merge keywords if concept already exists
+                        if (conceptMap[decodedName]) {
+                            const existingKeywords = new Set(conceptMap[decodedName]);
+                            decodedKeywords.forEach(kw => existingKeywords.add(kw));
+                            conceptMap[decodedName] = Array.from(existingKeywords);
+                        } else {
+                            conceptMap[decodedName] = decodedKeywords;
+                        }
+                    }
+                }
+            });
+            
+            // Uncheck and close
+            checkedTemplates.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            templateCheckboxContainer.classList.add('hidden');
+            templateToggleBtn.querySelector('svg').style.transform = 'rotate(0deg)';
+
+            updateConceptUI();
+        }
+
+
+        // --- 2. Save/Load Map Functions ---
+        function saveConceptMap() {
+            addConceptError.style.display = 'none';
+            if (Object.keys(conceptMap).length === 0) {
+                addConceptError.textContent = TRANSLATIONS.errorMapEmpty[currentLang];
+                addConceptError.dataset.errorKey = "errorMapEmpty";
+                addConceptError.style.display = 'block';
+                conceptNameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            let jsonString = JSON.stringify(conceptMap, null, 2);
+            // Decode for human-readable file
+            jsonString = jsonString.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
+                return String.fromCharCode(parseInt(grp, 16));
+            });
+            const blob = new Blob([jsonString], { type: "application/json;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'shloka_concept_map.json');
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        function loadConceptMap(event) {
+            addConceptError.style.display = 'none';
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const loadedMap = JSON.parse(e.target.result);
+                    if (typeof loadedMap === 'object' && !Array.isArray(loadedMap)) {
+                        conceptMap = loadedMap;
+                        updateConceptUI();
+                    } else { throw new Error("Invalid map format."); }
+                } catch (err) { 
+                    addConceptError.textContent = TRANSLATIONS.errorLoadMap[currentLang];
+                    addConceptError.dataset.errorKey = "errorLoadMap";
+                    addConceptError.style.display = 'block';
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = null; // Reset file input
+        }
+
+        // --- 3. Text Input Function ---
+        function loadTextFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                textInput.value = e.target.result;
+            };
+            reader.readAsText(file);
+            event.target.value = null; // Reset file input
+        }
+
+        // --- 4. Main Processing Functions ---
+        function hideResults() {
+            resultsArea.classList.add('hidden');
+            analysisSummaryCard.classList.add('hidden');
+            if (resultsChart) { resultsChart.destroy(); }
+        }
+        
+        function clearAll() {
+            conceptMap = {};
+            processedResults = [];
+            currentViewResults = [];
+            updateConceptUI();
+            
+            document.querySelectorAll('#template-checkbox-container input[type="checkbox"]:checked').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            if (!templateCheckboxContainer.classList.contains('hidden')) {
+                 templateCheckboxContainer.classList.add('hidden');
+                 templateToggleBtn.querySelector('svg').style.transform = 'rotate(0deg)';
+            }
+            
+            textInput.value = '';
+            resultsBody.innerHTML = '';
+            filterInput.value = '';
+            hideResults();
+            addConceptError.style.display = 'none';
+            textInputError.style.display = 'none';
+            shlokaCountSpan.textContent = `0 ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
+        }
+
+        // --- Sanskrit Normalization Function ---
+        function normalizeSanskrit(text) {
+            if (typeof text !== 'string') return '';
+            return text
+                .toLowerCase() // <-- FIX: Add toLowerCase() for case-insensitive matching
+                .replace(/[ःं]/g, '') // Remove Visarga and Anusvara
+                .replace(/[।॥]/g, ' ') // Replace dandas with space
+                .replace(/\s+/g, ' ') // Collapse whitespace
+                .trim();
+        }
+
+        // --- Toggle Loading State ---
+        function setProcessingState(isLoading) {
+            const textSpan = processBtn.querySelector('.btn-text');
+            const icon = processBtn.querySelector('.btn-icon');
+            const spinner = processBtn.querySelector('.spinner');
+
+            if (isLoading) {
+                processBtn.disabled = true;
+                processBtn.classList.add('btn-loading');
+                if (icon) icon.style.display = 'none';
+                if (spinner) spinner.style.display = 'inline-block';
+                if (textSpan) {
+                    textSpan.dataset.originalText = textSpan.textContent;
+                    textSpan.textContent = decodeHtmlEntities(TRANSLATIONS.processingBtn[currentLang]);
+                    textSpan.style.display = 'inline'; // Ensure text is visible
+                }
+            } else {
+                processBtn.disabled = false;
+                processBtn.classList.remove('btn-loading');
+                if (icon) icon.style.display = 'inline-block';
+                if (spinner) spinner.style.display = 'none';
+                if (textSpan && textSpan.dataset.originalText) {
+                    // Restore original text from the correct language key
+                    textSpan.textContent = decodeHtmlEntities(TRANSLATIONS.classifyBtn[currentLang]);
+                } else if (textSpan) {
+                    // Fallback if original text wasn't stored
+                    textSpan.textContent = decodeHtmlEntities(TRANSLATIONS.classifyBtn[currentLang]);
+                }
+            }
+        }
+
+        function processText() {
+            addConceptError.style.display = 'none';
+            textInputError.style.display = 'none';
+            
+            const rawTextInput = textInput.value;
+            if (Object.keys(conceptMap).length === 0) {
+                addConceptError.textContent = decodeHtmlEntities(TRANSLATIONS.errorMapEmpty[currentLang]);
+                addConceptError.dataset.errorKey = "errorMapEmpty";
+                addConceptError.style.display = 'block';
+                conceptNameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            if (!rawTextInput) {
+                textInputError.textContent = decodeHtmlEntities(TRANSLATIONS.errorNoText[currentLang]);
+                textInputError.dataset.errorKey = "errorNoText";
+                textInputError.style.display = 'block';
+                textInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            setProcessingState(true);
+            
+            // Use setTimeout to allow UI to update before heavy processing
+            setTimeout(() => {
+                // Split text by danda, handling multiline
+                const dandaRegex = /[\s\S]+?[।॥]/g;
+                let shlokasRaw = rawTextInput.match(dandaRegex);
+                
+                // Fallback to newline splitting if no dandas found
+                if (!shlokasRaw || shlokasRaw.length === 0) {
+                    shlokasRaw = rawTextInput.split('\n').filter(line => line.trim().length > 0);
+                }
+                
+                if (!shlokasRaw || shlokasRaw.length === 0) {
+                    textInputError.textContent = decodeHtmlEntities(TRANSLATIONS.errorNoShlokas[currentLang]);
+                    textInputError.dataset.errorKey = "errorNoShlokas";
+                    textInputError.style.display = 'block';
+                    textInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setProcessingState(false);
+                    return;
+                }
+                
+                const shlokas = shlokasRaw.map(s => s.trim()).filter(Boolean);
+
+                processedResults = [];
+                let totalKeywordHits = 0;
+                let matchedShlokaCount = 0;
+                let overallConceptCounts = {};
+
+                // Pre-normalize the concept map once
+                const normalizedConceptMap = {};
+                for (const [concept, keywords] of Object.entries(conceptMap)) {
+                    normalizedConceptMap[concept] = keywords.map(normalizeSanskrit).filter(Boolean);
+                }
+
+                let shlokaId = 1;
+                for (let i = 0; i < shlokas.length; i++) {
+                    const cleanedShloka = shlokas[i];
+                    
+                    const shlokaBefore = shlokas[i - 1] || null;
+                    const shlokaAfter = shlokas[i + 1] || null;
+
+                    const normalizedShloka = normalizeSanskrit(cleanedShloka);
+                    let scores = {};
+                    let keywordsInThisShloka = [];
+                    let hasMatch = false;
+
+                    for (const [concept, normalizedKeywords] of Object.entries(normalizedConceptMap)) {
+                        scores[concept] = 0;
+                        normalizedKeywords.forEach(normKeyword => {
+                            if (normalizedShloka.includes(normKeyword)) {
+                                scores[concept]++;
+                                totalKeywordHits++;
+                                hasMatch = true;
+                                
+                                // Find the original keyword for highlighting
+                                const originalKeywords = conceptMap[concept];
+                                const matchingOriginalKeyword = originalKeywords.find(ok => normalizeSanskrit(ok) === normKeyword);
+                                if (matchingOriginalKeyword && !keywordsInThisShloka.includes(matchingOriginalKeyword)) {
+                                     keywordsInThisShloka.push(matchingOriginalKeyword);
+                                }
+                            }
+                        });
+                    }
+
+                    if (hasMatch) {
+                        matchedShlokaCount++;
+                    }
+                    
+                    let topConcept = "N/A";
+                    let maxScore = 0;
+                    let scoreStrings = [];
+                    let topConceptsList = [];
+                    
+                    for(const [concept, score] of Object.entries(scores)) {
+                        if (score > 0) {
+                            scoreStrings.push(`${concept}: ${score}`);
+                            overallConceptCounts[concept] = (overallConceptCounts[concept] || 0) + score;
+                            
+                            if (score > maxScore) {
+                                maxScore = score;
+                                topConceptsList = [concept];
+                            } else if (score === maxScore && maxScore > 0) {
+                                topConceptsList.push(concept);
+                            }
+                        }
+                    }
+                    if (topConceptsList.length > 0) {
+                        topConcept = topConceptsList.join(', ');
+                    }
+                    
+                    let highlightedShloka = cleanedShloka;
+                    if(keywordsInThisShloka.length > 0) {
+                        // Create a regex to find all matching original keywords
+                        // Escape special regex characters in keywords
+                        const escapedKeywords = keywordsInThisShloka.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+                        const highlightRegex = new RegExp(`(${escapedKeywords.join('|')})`, 'g');
+                        highlightedShloka = cleanedShloka.replace(highlightRegex, (match) => `<mark>${match}</mark>`);
+                    }
+
+                    processedResults.push({
+                        id: shlokaId,
+                        shloka: cleanedShloka,
+                        highlighted_shloka: highlightedShloka,
+                        top_concept: topConcept,
+                        all_scores: scoreStrings.join(', '),
+                        char_count: cleanedShloka.length,
+                        word_count: cleanedShloka.split(/\s+/).filter(Boolean).length,
+                        shloka_before: shlokaBefore,
+                        shloka_after: shlokaAfter
+                    });
+                    shlokaId++;
+                }
+
+                currentViewResults = processedResults;
+                shlokaCountSpan.textContent = `${currentViewResults.length} ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
+                
+                resultsArea.classList.remove('hidden');
+
+                // Populate summary card
+                populateSummaryCard(shlokas.length, matchedShlokaCount, totalKeywordHits, overallConceptCounts);
+
+                updateDashboard(currentViewResults);
+                renderTablePage(1);
+
+                resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                setProcessingState(false);
+
+            }, 0);
+        }
+        
+        function populateSummaryCard(totalShlokas, matchedShlokas, totalHits, conceptCounts) {
+            summaryTotalShlokas.textContent = totalShlokas;
+            summaryMatchedShlokas.textContent = matchedShlokas;
+            summaryTotalHits.textContent = totalHits;
+
+            let topConceptName = "N/A";
+            let maxHits = 0;
+            for (const [concept, count] of Object.entries(conceptCounts)) {
+                if (count > maxHits) {
+                    maxHits = count;
+                    topConceptName = concept;
+                }
+            }
+            summaryTopConcept.textContent = (maxHits > 0) ? `${topConceptName} (${maxHits} hits)` : 'N/A';
+            
+            analysisSummaryCard.classList.remove('hidden');
+        }
+
+        // --- 5. Dashboard Function ---
+        function updateDashboard(results) {
+            dashboardContainer.classList.remove('hidden');
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            let conceptCounts = {};
+            // Tally counts from all *filtered* results
+            results.forEach(r => {
+                if (r.all_scores) { // Only count if there are scores
+                    const scores = r.all_scores.split(', ');
+                    scores.forEach(scoreString => {
+                        const parts = scoreString.split(': ');
+                        if (parts.length === 2) {
+                            const concept = parts[0];
+                            const count = parseInt(parts[1], 10);
+                            if (concept !== 'N/A') {
+                                conceptCounts[concept] = (conceptCounts[concept] || 0) + count;
+                            }
+                        }
+                    });
+                }
+            });
+            
+            // Sort by count descending and take top 10
+            const sortedConcepts = Object.entries(conceptCounts)
+                                      .sort(([,a],[,b]) => b - a);
+                                      
+            const top10Concepts = sortedConcepts.slice(0, 10);
+            
+            // If more than 10, group the rest into "Others"
+            if (sortedConcepts.length > 10) {
+                 const othersCount = sortedConcepts.slice(10).reduce((acc, [, count]) => acc + count, 0);
+                 top10Concepts.push(['Others', othersCount]);
+            }
+            
+            const labels = top10Concepts.map(([concept,]) => concept);
+            const data = top10Concepts.map(([,count]) => count);
+
+            if (resultsChart) { resultsChart.destroy(); }
+            
+            // Don't render chart if no data
+            if (data.length === 0 || data.every(d => d === 0)) {
+                 dashboardContainer.classList.add('hidden');
+                 return;
+            }
+            
+            resultsChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Keyword Hit Distribution',
+                        data: data,
+                        backgroundColor: [
+                            '#006400', '#1E40AF', '#B91C1C', '#D97706', '#6B7280',
+                            '#581C87', '#0369A1', '#BE123C', '#78350F', '#4B5563', '#888888'
+                        ],
+                        hoverOffset: 4,
+                        borderColor: 'var(--color-bg-white)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            position: 'right', 
+                            labels: {
+                                font: { family: 'Inter' },
+                                boxWidth: 20,
+                                padding: 15
+                            } 
+                        },
+                        title: {
+                            display: true, text: 'Keyword Hit Distribution (Top 10)',
+                            font: { size: 16, family: 'Inter', weight: '600' },
+                            color: 'var(--color-text-dark)'
+                        },
+                        tooltip: {
+                             callbacks: {
+                                 label: function(context) {
+                                     let label = context.label || '';
+                                     if (label) {
+                                         label += ': ';
+                                     }
+                                     if (context.parsed !== null) {
+                                         const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                         const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                         label += `${context.parsed} hits (${percentage}%)`;
+                                     }
+                                     return label;
+                                 }
+                             }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // --- 6. Pagination Functions ---
+        function renderTablePage(page) {
+            currentPage = page;
+            resultsBody.innerHTML = '';
+            const totalPages = Math.ceil(currentViewResults.length / ROWS_PER_PAGE);
+            
+            if (totalPages === 0) {
+                pageInfo.textContent = "";
+                prevPageButton.disabled = true;
+                nextPageButton.disabled = true;
+                paginationControls.classList.add('hidden');
+                
+                // Show a "no results" row
+                const row = resultsBody.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 6;
+                cell.textContent = 'No results match your filter.';
+                cell.style.textAlign = 'center';
+                cell.style.fontStyle = 'italic';
+                cell.style.color = 'var(--color-text-light)';
+                return;
+            }
+            
+            paginationControls.classList.remove('hidden');
+            pageInfo.textContent = `${decodeHtmlEntities(TRANSLATIONS.page[currentLang])} ${currentPage} ${decodeHtmlEntities(TRANSLATIONS.of[currentLang])} ${totalPages}`;
+            prevPageButton.disabled = (currentPage === 1);
+            nextPageButton.disabled = (currentPage === totalPages);
+
+            const pageData = currentViewResults.slice((currentPage - 1) * ROWS_PER_PAGE, currentPage * ROWS_PER_PAGE);
+            pageData.forEach(result => {
+                const row = resultsBody.insertRow();
+                row.dataset.shlokaId = result.id;
+                row.insertCell().textContent = result.id;
+                row.insertCell().innerHTML = result.highlighted_shloka;
+                row.insertCell().textContent = result.top_concept;
+                row.insertCell().textContent = result.all_scores;
+                row.insertCell().textContent = result.char_count;
+                row.insertCell().textContent = result.word_count;
+            });
+        }
+        function prevPage() { if (currentPage > 1) { renderTablePage(currentPage - 1); } }
+        function nextPage() {
+            const totalPages = Math.ceil(currentViewResults.length / ROWS_PER_PAGE);
+            if (currentPage < totalPages) { renderTablePage(currentPage + 1); }
+        }
+        
+        // --- 7. Results Utility Functions ---
+        function filterResults() {
+            const filterText = filterInput.value.toLowerCase();
+            if (filterText === "") {
+                currentViewResults = processedResults;
+            } else {
+                currentViewResults = processedResults.filter(r => {
+                    return r.shloka.toLowerCase().includes(filterText) || 
+                           r.all_scores.toLowerCase().includes(filterText) ||
+                           r.top_concept.toLowerCase().includes(filterText);
+                });
+            }
+            shlokaCountSpan.textContent = `${currentViewResults.length} ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
+            updateDashboard(currentViewResults); // Update dashboard based on filtered results
+            renderTablePage(1);
+        }
+
+        function downloadFile(format) {
+            let data = "";
+            let filename = "";
+            let mimeType = "";
+            const dataToExport = currentViewResults; // Export only filtered results
+
+            if (format === 'json') {
+                let jsonString = JSON.stringify(dataToExport, null, 2);
+                jsonString = jsonString.replace(/\\u([\dA-Fa-f]{4})/g, (match, grp) => {
+                    return String.fromCharCode(parseInt(grp, 16));
+                });
+                data = jsonString;
+                filename = "shloka_export.json";
+                mimeType = "application/json;charset=utf-8;";
+            } else {
+                const headers = "id,shloka,top_concept,all_scores,char_count,word_count,shloka_before,shloka_after\n";
+                const escapeCSV = (str) => `"${String(str).replace(/"/g, '""')}"`;
+                const csvRows = dataToExport.map(r => {
+                    return [
+                        r.id, escapeCSV(r.shloka), escapeCSV(r.top_concept),
+                        escapeCSV(r.all_scores), r.char_count, r.word_count,
+                        escapeCSV(r.shloka_before || ''), escapeCSV(r.shloka_after || '')
+                    ].join(',');
+                });
+                data = headers + csvRows.join('\n');
+                filename = "shloka_export.csv";
+                mimeType = "text/csv;charset=utf-8;";
+            }
+            const bom = "\uFEFF"; // Byte Order Mark for Excel
+            const blob = new Blob([bom + data], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', filename);
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- Modal Functions ---
+        function handleTableRowClick(event) {
+            const row = event.target.closest('tr');
+            if (!row || !row.dataset.shlokaId) return;
+
+            const shlokaId = parseInt(row.dataset.shlokaId, 10);
+            const shlokaData = processedResults.find(r => r.id === shlokaId);
+
+            if (shlokaData) {
+                showModal(shlokaData);
+            }
+        }
+
+        function showModal(data) {
+            modalTopConcept.textContent = data.top_concept || 'N/A';
+            modalAllScores.textContent = data.all_scores || 'No scores';
+            
+            modalShlokaText.textContent = data.shloka; 
+            
+            if (data.shloka_before) {
+                modalShlokaBefore.textContent = data.shloka_before;
+                modalShlokaBefore.classList.remove('hidden');
+            } else {
+                modalShlokaBefore.classList.add('hidden');
+            }
+            
+            if (data.shloka_after) {
+                modalShlokaAfter.textContent = data.shloka_after;
+                modalShlokaAfter.classList.remove('hidden');
+            } else {
+                modalShlokaAfter.classList.add('hidden');
+            }
+            
+            shlokaModal.classList.remove('hidden');
+        }
+
+        function hideModal() {
+            shlokaModal.classList.add('hidden');
+            modalTopConcept.textContent = '';
+            modalAllScores.textContent = '';
+            modalShlokaText.textContent = '';
+            modalShlokaBefore.textContent = '';
+            modalShlokaAfter.textContent = '';
+        }
+
+        function copyModalText() {
+            const textToCopy = [
+                modalShlokaBefore.textContent,
+                modalShlokaText.textContent,
+                modalShlokaAfter.textContent
+            ].filter(Boolean).join('\n\n');
+            
+            try {
+                // Use execCommand as clipboard.writeText can fail in iFrames
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                textArea.style.position = "fixed";
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    showCopyFeedback(TRANSLATIONS.errorCopy[currentLang], true);
+                } else {
+                    showCopyFeedback(TRANSLATIONS.errorCopyFail[currentLang], false);
+                }
+            } catch (err) {
+                 showCopyFeedback(TRANSLATIONS.errorCopyFail[currentLang], false);
+            }
+        }
+        
+        function showCopyFeedback(message, success) {
+            const originalText = modalCopyBtn.textContent;
+            modalCopyBtn.textContent = message;
+            modalCopyBtn.disabled = true;
+            modalCopyBtn.style.background = success ? 'var(--color-primary)' : 'var(--color-danger)';
+            
+            setTimeout(() => {
+                 modalCopyBtn.textContent = decodeHtmlEntities(TRANSLATIONS.modalCopyBtn[currentLang]);
+                 modalCopyBtn.disabled = false;
+                 modalCopyBtn.style.background = '';
+            }, 2000);
+        }
+
+    }); // <-- END OF DOMCONTENTLOADED
+    </script>
+</body>
+</html>
+
+
