@@ -104,13 +104,8 @@ Contributing to open-source Digital Ayurveda projects.
 
 ## 📄 License
 
-**Creative Commons Attribution 4.0 International (CC BY 4.0)**
+This project is licensed in two parts:
 
-You are free to:
+**Software Code:** All code in this repository (e.g., .js, .html, .css files) is licensed under the MIT License. This makes the code open and reusable while limiting liability.
 
-* **Share** — copy and redistribute the material in any medium or format
-* **Adapt** — remix, transform, and build upon the material for any purpose, even commercially
-
-**Under the following terms:**
-
-* **Attribution** — You must give appropriate credit (cite the DOI and link to this repository) and indicate if changes were made.
+**Documentation & Content:** All documentation (like this README.md) and data files are licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). This ensures you must give appropriate credit (cite the DOI) when using this work.
