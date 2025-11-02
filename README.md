@@ -4,15 +4,7 @@
 
 **ShlokaAI** is a citable, open-source piece of **research software** designed for **BAMS students, researchers, and developers** in the field of **Digital Ayurveda**.
 
-This is not just a dataset — it is an **interactive web tool** that allows you to:
-
-1. **Build Custom “Concept Maps”** using Ayurvedic principles (like Doshas, Dhatus, Gunas) and their Sanskrit/IAST synonyms.
-2. **Paste or Upload** raw Sanskrit text (e.g., a chapter from a Samhita).
-3. **Automatically Analyze & Classify** every shloka, scoring it against your concept map.
-4. **Explore the Results** in an interactive dashboard, a filterable table, and a “shloka context” modal.
-5. **Export** your classified, ready-to-use data as a `CSV` or `JSON` file.
-
-This tool bridges the gap between **classical Ayurvedic texts** and **modern data analysis**.
+This is not just a dataset — it is an **interactive web tool** that bridges the gap between classical Ayurvedic texts and modern data analysis. It allows you to build custom "Concept Maps" (e.g., for Doshas, Dhatus, Gunas), analyze raw Sanskrit text against your map, and explore the results in an interactive dashboard. You can then export your classified, ready-to-use data as `CSV` or `JSON`.
 
 ---
 
@@ -38,7 +30,7 @@ This tool bridges the gap between **classical Ayurvedic texts** and **modern dat
 {
   "Vata Dosha": ["वात", "वायु", "vata", "vayu"],
   "Pitta Dosha": ["पित्त", "अग्नि", "pitta", "agni"],
-  "Kapha Dosha": ["कफ", "श्लेष्म", "kapha"]
+  "Kapha Dosha": ["कफ", "श्लेष्ม", "kapha"]
 }
 ```
 
@@ -76,11 +68,38 @@ This tool bridges the gap between **classical Ayurvedic texts** and **modern dat
 
 ## 📖 How to Cite
 
-> Varshney, S. (2025). *ShlokaAI: The Smart Sanskrit Analysis Platform* (Version 1.0.0) [Software]. Zenodo.
-> [https://doi.org/10.5281/zenodo.XXXXXXX](https://doi.org/10.5281/zenodo.XXXXXXX)
+If you use this software in your research, please cite it. This helps support the project.  
+Once you publish, replace **XXXXXXX** with your new Zenodo DOI.
 
-🪶 **Note:**
-Once you publish this project on Zenodo, replace the `XXXXXXX` with your assigned DOI number in both the badge and the citation.
+**Plain Text Citation:**
+
+> Varshney, S. (2025). *ShlokaAI: The Smart Sanskrit Analysis Platform (Version 1.0.0)* [Software]. Zenodo.  
+> https://doi.org/10.5281/zenodo.XXXXXXX
+
+**BibTeX (for researchers):**
+```bibtex
+@software{varshney_sparsh_2025_XXXXXXX,
+  author       = {Varshney, Sparsh},
+  title        = {{ShlokaAI: The Smart Sanskrit Analysis Platform}},
+  month        = nov,
+  year         = 2025,
+  publisher    = {Zenodo},
+  version      = {1.0.0},
+  doi          = {10.5281/zenodo.XXXXXXX},
+  url          = {https://doi.org/10.5281/zenodo.XXXXXXX}
+}
+```
+---
+## 🤝 Contributing & Support
+
+This is a community project — **contributions are welcome!**
+
+- 🐞 **Found a bug?** Report it as an [Issue](../../issues).
+- 💡 **Have an idea?** Suggest a new feature.
+- 🔧 **Want to help?** Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+**Community Rules:**  
+Please follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ---
 
