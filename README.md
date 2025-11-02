@@ -1,7 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17506828.svg)](https://doi.org/10.5281/zenodo.17506828)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Open Source](https://badgen.net/badge/status/open%20source/green)
-![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
+[![Open Source](https://badgen.net/badge/status/open%20source/green)](https://github.com/sciencewithsaucee-sudo/ShlokaAI)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/sciencewithsaucee-sudo/ShlokaAI/blob/main/CODE_OF_CONDUCT.md)
 
 # 🕉️ ShlokaAI: The Smart Sanskrit Analysis Platform
 
