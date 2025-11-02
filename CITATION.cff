@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+type: software
+title: "ShlokaAI: The Smart Sanskrit Analysis Platform"
+version: "1.0.0"
+abstract: "An interactive web tool for BAMS students and researchers to analyze and classify Sanskrit shlokas. Users can build custom concept maps (e.g., Doshas, Dhatus, Gunas) with synonyms, paste or upload Sanskrit text, and the tool will automatically score each shloka, identify the top concepts, and provide results in an interactive dashboard and a filterable, exportable table (CSV/JSON). The tool is bilingual (English/Hindi) and supports full-text analysis for digital Ayurveda and health humanities research."
+authors:
+  - given-names: "Sparsh"
+    family-names: "Varshney"
+    email: "sparsh@amidhaayurveda.com"
+    affiliation: "Amidha Ayurveda & Uttarakhand Ayurved University"
+    orcid: "https://orcid.org/0009-0004-7835-0673"
+keywords:
+  - "Ayurveda"
+  - "Sanskrit"
+  - "Digital Humanities"
+  - "Ayurvedic Informatics"
+  - "Shloka"
+  - "Text Analysis"
+  - "Open Data"
+  - "Software"
+  - "BAMS"
+  - "JSON"
+license: "CC-BY-4.0"
+repository-code: "https://github.com/sciencewithsaucee-sudo/ShlokaAI"
+url: "https://www.amidhaayurveda.com/p/shloka-ai.html"
+date-released: "2025-11-04"
