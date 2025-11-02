@@ -1,4 +1,7 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17506828.svg)](https://doi.org/10.5281/zenodo.17506828)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC--BY--4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
+![Open Source](https://badgen.net/badge/status/open%20source/green)
+![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 
 # 🕉️ ShlokaAI: The Smart Sanskrit Analysis Platform
 
@@ -30,7 +33,7 @@ This is not just a dataset — it is an **interactive web tool** that bridges th
 {
   "Vata Dosha": ["वात", "वायु", "vata", "vayu"],
   "Pitta Dosha": ["पित्त", "अग्नि", "pitta", "agni"],
-  "Kapha Dosha": ["कफ", "श्लेष्ม", "kapha"]
+  "Kapha Dosha": ["कफ", "श्लेष्म", "kapha"]
 }
 ```
 
@@ -58,47 +61,49 @@ This is not just a dataset — it is an **interactive web tool** that bridges th
 
 🔗 **Live Tool:** [https://www.amidhaayurveda.com/p/shloka-ai.html](https://www.amidhaayurveda.com/p/shloka-ai.html)
 
-**Step 1:** Load a template (e.g., “Doshas”) or create your own concept map.
-**Step 2:** Paste Sanskrit text into the input box.
-**Step 3:** Click “Start Analysis.”
-**Step 4:** Explore results on the dashboard and in the table. Click any row to read the shloka in context.
-**Step 5:** Export your results as `.csv` or `.json`.
+* **Step 1:** Load a template (e.g., “Doshas”) or create your own concept map.
+* **Step 2:** Paste Sanskrit text into the input box.
+* **Step 3:** Click “Start Analysis.”
+* **Step 4:** Explore results on the dashboard and in the table. Click any row to read the shloka in context.
+* **Step 5:** Export your results as `.csv` or `.json`.
 
 ---
 
 ## 📖 How to Cite
 
-If you use this software in your research, please cite it. This helps support the project.  
-Once you publish, replace **XXXXXXX** with your new Zenodo DOI.
+If you use this software in your research, please cite it. This helps support the project.
 
 **Plain Text Citation:**
 
-> Varshney, S. (2025). *ShlokaAI: The Smart Sanskrit Analysis Platform (Version 1.0.0)* [Software]. Zenodo.  
-> https://doi.org/10.5281/zenodo.XXXXXXX
+> Varshney, S. (2025). *ShlokaAI: The Smart Sanskrit Analysis Platform (Version 1.0.0)* [Software]. Zenodo.
+> [https://doi.org/10.5281/zenodo.17506828](https://doi.org/10.5281/zenodo.17506828)
 
 **BibTeX (for researchers):**
+
 ```bibtex
-@software{varshney_sparsh_2025_XXXXXXX,
+@software{varshney_sparsh_2025_17506828,
   author       = {Varshney, Sparsh},
   title        = {{ShlokaAI: The Smart Sanskrit Analysis Platform}},
   month        = nov,
   year         = 2025,
   publisher    = {Zenodo},
   version      = {1.0.0},
-  doi          = {10.5281/zenodo.XXXXXXX},
-  url          = {https://doi.org/10.5281/zenodo.XXXXXXX}
+  doi          = {10.5281/zenodo.17506828},
+  url          = {https://doi.org/10.5281/zenodo.17506828}
 }
 ```
+
 ---
+
 ## 🤝 Contributing & Support
 
 This is a community project — **contributions are welcome!**
 
-- 🐞 **Found a bug?** Report it as an [Issue](../../issues).
-- 💡 **Have an idea?** Suggest a new feature.
-- 🔧 **Want to help?** Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+* 🐞 **Found a bug?** Report it as an [Issue](../../issues).
+* 💡 **Have an idea?** Suggest a new feature.
+* 🔧 **Want to help?** Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-**Community Rules:**  
+**Community Rules:**
 Please follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ---
@@ -115,9 +120,9 @@ Please follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 **Developed by:** *Sparsh Varshney* (Founder, Amidha Ayurveda)
 Contributing to open-source Digital Ayurveda projects.
 
-🌐 **Website:** [amidhaayurveda.com/p/about.html](https://www.amidhaayurveda.com/p/about.html)
-🆔 **ORCID:** [https://orcid.org/0009-0004-7835-0673](https://orcid.org/0009-0004-7835-0673)
-💼 **LinkedIn:** [linkedin.com/in/sparshvarshney](https://linkedin.com/in/sparshvarshney)
+* 🌐 **Website:** [amidhaayurveda.com/p/about.html](https://www.amidhaayurveda.com/p/about.html)
+* 🆔 **ORCID:** [https://orcid.org/0009-0004-7835-0673](https://orcid.org/0009-0004-7835-0673)
+* 💼 **LinkedIn:** [linkedin.com/in/sparshvarshney](https://linkedin.com/in/sparshvarshney)
 
 ---
 
@@ -125,6 +130,6 @@ Contributing to open-source Digital Ayurveda projects.
 
 This project is licensed in two parts:
 
-**Software Code:** All code in this repository (e.g., .js, .html, .css files) is licensed under the MIT License. This makes the code open and reusable while limiting liability.
+**Software Code:** All code in this repository (e.g., .js, .html, .css files) is licensed under the [MIT License](https://opensource.org/license/MIT). This makes the code open and reusable while limiting liability.
 
-**Documentation & Content:** All documentation (like this README.md) and data files are licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). This ensures you must give appropriate credit (cite the DOI) when using this work.
+**Documentation & Content:** All documentation (like this README.md) and data files are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0). This ensures you must give appropriate credit (cite the DOI) when using this work.
