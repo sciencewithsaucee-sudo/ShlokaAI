@@ -1,8 +1,5 @@
 ---
-# Page title
 title: 'ShlokaAI: The Smart Sanskrit Analysis Platform'
-
-# JOSS tags
 tags:
   - Sanskrit
   - Ayurveda
@@ -11,25 +8,19 @@ tags:
   - Text Analysis
   - BAMS
   - Research Software
-
-# Paper authors
 authors:
   - name: Sparsh Varshney
     given-names: Sparsh
     surname: Varshney
     orcid: 0009-0004-7835-0673
-    affiliation: 1
+    affiliation: "1, 2"
     corresponding: true
-
-# Paper affiliations
 affiliations:
   - index: 1
     name: Amidha Ayurveda, India
-
-# Paper date
+  - index: 2
+    name: Uttarakhand Ayurveda University, India
 date: 4 November 2025
-
-# Paper bibliography
 bibliography: paper.bib
 ---
 
@@ -37,7 +28,7 @@ bibliography: paper.bib
 
 ShlokaAI is an open-source, bilingual (English/Hindi) web-based tool designed to make the analysis of Sanskrit texts accessible to students and researchers. Many foundational scientific and philosophical texts, such as those in Ayurveda (traditional Indian medicine), are composed in Sanskrit. For students and researchers, the task of finding all mentions of a specific concept (e.g., a "body humor" or "herbal property") across thousands of verses (*shlokas*) is a slow, manual, and complex process.
 
-ShlokaAI automates this "text-mining" task. It provides a simple, no-code interface where users can load pre-built templates or create their own "Concept Maps." The tool then processes an uploaded text file, highlights all relevant terms, and presents the findings in an interactive dashboard (\autoref{fig:dashboard}), a filterable table, and a modal that shows the context of each verse. This allows users to quickly see the distribution of concepts in a text and export the classified data as CSV or JSON for further research.
+ShlokaAI automates this "text-mining" task. It provides a simple, no-code interface where users can **paste text directly or upload a `.txt` file**. Users can load pre-built templates (e.g., for *Doshas*, *Dhatus*) or create their own 'Concept Maps.' Crucially, these custom maps can be **saved as `.json` files and re-loaded**, allowing for reproducible research and shareable concept libraries. The tool processes the text, highlights all relevant terms, and presents the findings in an interactive dashboard (\autoref{fig:dashboard}), a filterable table, and a modal that shows the context of each verse. This allows users to quickly see the distribution of concepts in a text and export the classified data as CSV or JSON for further research.
 
 # Statement of Need
 
