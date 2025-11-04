@@ -69,6 +69,12 @@ This is not just a dataset — it is an **interactive web tool** that bridges th
 
 ---
 
+## 🧪 Automated Tests
+
+This software includes a test suite for the core analysis logic. Reviewers and contributors can run the tests by opening the `tests.html` file in any modern web browser.
+
+---
+
 ## 📖 How to Cite
 
 If you use this software in your research, please cite it. This helps support the project.
