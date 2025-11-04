@@ -919,13 +919,12 @@
             </div>
         </div>
     </div>
+<script src="shloka_logic.js"></script>
 
-
-    <!-- *** JAVASCRIPT LOGIC (WRAPPED IN DOMCONTENTLOADED) *** -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         
-        // --- Globals ---
+        // --- Globals (UI State) ---
         let conceptMap = {};
         let processedResults = [];
         let currentViewResults = [];
@@ -1160,7 +1159,7 @@
             updateConceptUI(); // Update the UI to show the map is empty
         });
         
-        processBtn.addEventListener('click', processText);
+        processBtn.addEventListener('click', processText); // <-- This is the only change here
         clearBtn.addEventListener('click', clearAll);
         downloadCsvBtn.addEventListener('click', () => downloadFile('csv'));
         downloadJsonBtn.addEventListener('click', () => downloadFile('json'));
@@ -1471,16 +1470,9 @@
             shlokaCountSpan.textContent = `0 ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
         }
 
-        // --- Sanskrit Normalization Function ---
-        function normalizeSanskrit(text) {
-            if (typeof text !== 'string') return '';
-            return text
-                .toLowerCase() // <-- FIX: Add toLowerCase() for case-insensitive matching
-                .replace(/[ःं]/g, '') // Remove Visarga and Anusvara
-                .replace(/[।॥]/g, ' ') // Replace dandas with space
-                .replace(/\s+/g, ' ') // Collapse whitespace
-                .trim();
-        }
+        /* NOTE: normalizeSanskrit() function has been MOVED to shloka_logic.js 
+         It is now available globally because shloka_logic.js is loaded first.
+        */
 
         // --- Toggle Loading State ---
         function setProcessingState(isLoading) {
@@ -1513,147 +1505,48 @@
             }
         }
 
+        // --- NEW processText() function (The "Controller") ---
         function processText() {
             addConceptError.style.display = 'none';
             textInputError.style.display = 'none';
             
             const rawTextInput = textInput.value;
-            if (Object.keys(conceptMap).length === 0) {
-                addConceptError.textContent = decodeHtmlEntities(TRANSLATIONS.errorMapEmpty[currentLang]);
-                addConceptError.dataset.errorKey = "errorMapEmpty";
-                addConceptError.style.display = 'block';
-                conceptNameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
-            if (!rawTextInput) {
-                textInputError.textContent = decodeHtmlEntities(TRANSLATIONS.errorNoText[currentLang]);
-                textInputError.dataset.errorKey = "errorNoText";
-                textInputError.style.display = 'block';
-                textInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
 
+            // Start processing
             setProcessingState(true);
             
-            // Use setTimeout to allow UI to update before heavy processing
+            // Use setTimeout to allow UI to update (spinner to show)
             setTimeout(() => {
-                // Split text by danda, handling multiline
-                const dandaRegex = /[\s\S]+?[।॥]/g;
-                let shlokasRaw = rawTextInput.match(dandaRegex);
                 
-                // Fallback to newline splitting if no dandas found
-                if (!shlokasRaw || shlokasRaw.length === 0) {
-                    shlokasRaw = rawTextInput.split('\n').filter(line => line.trim().length > 0);
-                }
-                
-                if (!shlokasRaw || shlokasRaw.length === 0) {
-                    textInputError.textContent = decodeHtmlEntities(TRANSLATIONS.errorNoShlokas[currentLang]);
-                    textInputError.dataset.errorKey = "errorNoShlokas";
-                    textInputError.style.display = 'block';
-                    textInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Call the "engine" function from shloka_logic.js
+                const analysisPackage = runShlokaAnalysis(rawTextInput, conceptMap);
+
+                // --- Handle Errors from the engine ---
+                if (analysisPackage.error) {
+                    const errorKey = analysisPackage.error;
+                    const errorElement = (errorKey === 'errorMapEmpty') ? addConceptError : textInputError;
+                    const errorScrollElement = (errorKey === 'errorMapEmpty')? conceptNameInput : textInput;
+
+                    errorElement.textContent = decodeHtmlEntities(TRANSLATIONS[errorKey][currentLang]);
+                    errorElement.dataset.errorKey = errorKey;
+                    errorElement.style.display = 'block';
+                    errorScrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
                     setProcessingState(false);
                     return;
                 }
-                
-                const shlokas = shlokasRaw.map(s => s.trim()).filter(Boolean);
 
-                processedResults = [];
-                let totalKeywordHits = 0;
-                let matchedShlokaCount = 0;
-                let overallConceptCounts = {};
-
-                // Pre-normalize the concept map once
-                const normalizedConceptMap = {};
-                for (const [concept, keywords] of Object.entries(conceptMap)) {
-                    normalizedConceptMap[concept] = keywords.map(normalizeSanskrit).filter(Boolean);
-                }
-
-                let shlokaId = 1;
-                for (let i = 0; i < shlokas.length; i++) {
-                    const cleanedShloka = shlokas[i];
-                    
-                    const shlokaBefore = shlokas[i - 1] || null;
-                    const shlokaAfter = shlokas[i + 1] || null;
-
-                    const normalizedShloka = normalizeSanskrit(cleanedShloka);
-                    let scores = {};
-                    let keywordsInThisShloka = [];
-                    let hasMatch = false;
-
-                    for (const [concept, normalizedKeywords] of Object.entries(normalizedConceptMap)) {
-                        scores[concept] = 0;
-                        normalizedKeywords.forEach(normKeyword => {
-                            if (normalizedShloka.includes(normKeyword)) {
-                                scores[concept]++;
-                                totalKeywordHits++;
-                                hasMatch = true;
-                                
-                                // Find the original keyword for highlighting
-                                const originalKeywords = conceptMap[concept];
-                                const matchingOriginalKeyword = originalKeywords.find(ok => normalizeSanskrit(ok) === normKeyword);
-                                if (matchingOriginalKeyword && !keywordsInThisShloka.includes(matchingOriginalKeyword)) {
-                                     keywordsInThisShloka.push(matchingOriginalKeyword);
-                                }
-                            }
-                        });
-                    }
-
-                    if (hasMatch) {
-                        matchedShlokaCount++;
-                    }
-                    
-                    let topConcept = "N/A";
-                    let maxScore = 0;
-                    let scoreStrings = [];
-                    let topConceptsList = [];
-                    
-                    for(const [concept, score] of Object.entries(scores)) {
-                        if (score > 0) {
-                            scoreStrings.push(`${concept}: ${score}`);
-                            overallConceptCounts[concept] = (overallConceptCounts[concept] || 0) + score;
-                            
-                            if (score > maxScore) {
-                                maxScore = score;
-                                topConceptsList = [concept];
-                            } else if (score === maxScore && maxScore > 0) {
-                                topConceptsList.push(concept);
-                            }
-                        }
-                    }
-                    if (topConceptsList.length > 0) {
-                        topConcept = topConceptsList.join(', ');
-                    }
-                    
-                    let highlightedShloka = cleanedShloka;
-                    if(keywordsInThisShloka.length > 0) {
-                        // Create a regex to find all matching original keywords
-                        // Escape special regex characters in keywords
-                        const escapedKeywords = keywordsInThisShloka.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
-                        const highlightRegex = new RegExp(`(${escapedKeywords.join('|')})`, 'g');
-                        highlightedShloka = cleanedShloka.replace(highlightRegex, (match) => `<mark>${match}</mark>`);
-                    }
-
-                    processedResults.push({
-                        id: shlokaId,
-                        shloka: cleanedShloka,
-                        highlighted_shloka: highlightedShloka,
-                        top_concept: topConcept,
-                        all_scores: scoreStrings.join(', '),
-                        char_count: cleanedShloka.length,
-                        word_count: cleanedShloka.split(/\s+/).filter(Boolean).length,
-                        shloka_before: shlokaBefore,
-                        shloka_after: shlokaAfter
-                    });
-                    shlokaId++;
-                }
-
+                // --- No Errors, Update the UI with Results ---
+                processedResults = analysisPackage.results;
                 currentViewResults = processedResults;
+                
                 shlokaCountSpan.textContent = `${currentViewResults.length} ${decodeHtmlEntities(TRANSLATIONS.shlokasFound[currentLang])}`;
                 
                 resultsArea.classList.remove('hidden');
 
                 // Populate summary card
-                populateSummaryCard(shlokas.length, matchedShlokaCount, totalKeywordHits, overallConceptCounts);
+                const summary = analysisPackage.summary;
+                populateSummaryCard(summary.totalShlokas, summary.matchedShlokas, summary.totalHits, summary.conceptCounts);
 
                 updateDashboard(currentViewResults);
                 renderTablePage(1);
@@ -1806,7 +1699,7 @@
             }
             
             paginationControls.classList.remove('hidden');
-            pageInfo.textContent = `${decodeHtmlEntities(TRANSLATIONS.page[currentLang])} ${currentPage} ${decodeHtmlEntities(TRANSLATIONS.of[currentLang])} ${totalPages}`;
+            pageInfo.textContent = `${decodeHtmlEntities(TRANSLATIONS.page[currentLang])} ${currentPage} ${currentPage} ${decodeHtmlEntities(TRANSLATIONS.of[currentLang])} ${totalPages}`;
             prevPageButton.disabled = (currentPage === 1);
             nextPageButton.disabled = (currentPage === totalPages);
 
