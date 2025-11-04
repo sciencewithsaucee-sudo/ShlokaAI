@@ -69,6 +69,19 @@ This is not just a dataset — it is an **interactive web tool** that bridges th
 
 ---
 
+## 🧩 Quickstart Example
+
+1.  Open the [**ShlokaAI Live Tool**](https://sciencewithsaucee-sudo.github.io/ShlokaAI/).
+2.  Load the **"Ayurveda - Doshas (3)"** template.
+3.  Paste this Sanskrit text into the input box:
+    ```
+    वातपित्तश्लेष्माण एव देहसम्भवहेतवः।
+    तत् पुनर्वातपित्तकफभेदात् त्रिधा।
+    ```
+4.  Click **"Start Analysis"** to see the instant results.
+
+---
+
 ## 🧪 Automated Tests
 
 This software includes a test suite for the core analysis logic. Reviewers and contributors can run the tests by opening the `tests.html` file in any modern web browser.
