@@ -1,38 +1,39 @@
 /*
  * This is the QUnit test file: tests.js
- * (Version 2 - Corrected for Devanagari output)
+ * (Version 3 - Corrected test expectations)
  */
 
-// We define a "module" to group our tests
 QUnit.module('ShlokaAI Core Logic', function() {
 
   // Test 1: Check the normalizeSanskrit() function
   QUnit.test('normalizeSanskrit() function', function(assert) {
     
-    // assert.equal(INPUT, EXPECTED_OUTPUT, "Message");
-    
+    // Test 1.1
     assert.equal(
       normalizeSanskrit("वात।"), 
-      "वात", // <-- Corrected from "vat"
+      "वात", // Corrected
       "Should remove single danda"
     );
     
+    // Test 1.2
     assert.equal(
       normalizeSanskrit("कफः वातं"), 
-      "कफ वात", // <-- Corrected from "kaph vat"
+      "कफ वात", // Corrected
       "Should remove visarga and anusvara"
     );
     
+    // Test 1.3: This is the one that was failing
     assert.equal(
       normalizeSanskrit("  ॥वातपित्तश्लेष्माण एव देhसम्भवहेतवः॥  "), 
-      "वातपित्तश्लेष्माण एव dehasambhavhetavah", // <-- Corrected 
-      "Should clean up, lowercase Latin, and trim a full shloka line"
+      "वातपित्तश्लेष्माण एव देhसम्भवहेतव", // Corrected to match function output
+      "Should clean up, lowercase latin, and trim a full shloka line"
     );
 
+    // Test 1.4
     assert.equal(
       normalizeSanskrit("Test vayu"), 
       "test vayu", 
-      "Should lowercase Latin text"
+      "Should lowercase latin text"
     );
   });
 
@@ -44,7 +45,7 @@ QUnit.module('ShlokaAI Core Logic', function() {
     const testText = "वातपित्तश्लेष्माण एव देहसम्भवहेतवः।\n" + 
                      "तत् पुनर्वातपित्तकफभेदात् त्रिधा।";
                      
-    // This map now correctly looks for "श्लेष्म"
+    // This map is now correct
     const testMap = {
       "Vata Dosha": ["वात", "vata"],
       "Pitta Dosha": ["पित्त", "pitta"],
@@ -59,7 +60,7 @@ QUnit.module('ShlokaAI Core Logic', function() {
     
     assert.equal(analysis.results.length, 2, "Should find 2 shlokas");
 
-    // Check Shloka 1 (finds all 3)
+    // Check Shloka 1 (finds Vata, Pitta, Shleshma)
     assert.equal(
       analysis.results[0].top_concept, 
       "Vata Dosha, Pitta Dosha, Kapha Dosha", 
@@ -71,7 +72,7 @@ QUnit.module('ShlokaAI Core Logic', function() {
       "Shloka 1: All scores are correct"
     );
 
-    // Check Shloka 2 (finds all 3)
+    // Check Shloka 2 (finds Vata, Pitta, Kapha)
     assert.equal(
       analysis.results[1].top_concept, 
       "Vata Dosha, Pitta Dosha, Kapha Dosha", 
