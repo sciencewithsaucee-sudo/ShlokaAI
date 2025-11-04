@@ -15,7 +15,7 @@
     <!-- Chart.js library for the dashboard -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Professional CSS (v19.8) -->
+    <!-- Professional CSS (v19.8.2) -->
     <style>
         :root {
             --color-primary: #006400; /* Dark Green */
@@ -645,6 +645,23 @@
                     <span data-lang-key="langToggle">हिन्दी</span>
                 </button>
             </div>
+            <!-- === NEW CITATION TEXT ADDED HERE === -->
+            <p style="font-size: 0.875rem; color: var(--color-text-body); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                Citation: ShlokaAI: The Smart Sanskrit Analysis Platform (v1.0.0).
+            </p>
+            <!-- === BADGES MOVED HERE === -->
+            <div class="hero-badges" style="margin-top: 0.75rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="https://doi.org/10.5281/zenodo.17506828" target="_blank" rel="noopener" title="View DOI on Zenodo">
+                    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17506828.svg" alt="DOI">
+                </a>
+                <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener" title="View License on MIT">
+                    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+                </a>
+                <a href="https://github.com/sciencewithsaucee-sudo/ShlokaAI/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" title="View Contributing Guidelines on GitHub">
+                    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" alt="Contributions Welcome">
+                </a>
+            </div>
+            <!-- === END OF MOVED BADGES === -->
         </div>
     </section>
 
@@ -837,12 +854,31 @@
                     </li>
                 </ol>
 
+                <!-- === UPDATED CITATION SECTION === -->
+                <h2>Cite this Tool</h2>
+                <div style="position: relative;">
+                    <button id="copy-citation-btn" class="btn btn-outline" title="Copy Citation" style="position: absolute; top: 0.75rem; right: 0.75rem; padding: 6px 8px; font-size: 0.8rem; line-height: 1; z-index: 10;">
+                        <!-- Copy Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                          <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3z"/>
+                        </svg>
+                        <!-- Removed the span with "Copy" text -->
+                    </button>
+                    <!-- Removed word-break: break-all; to fix aggressive wrapping -->
+                    <p id="citation-text" style="font-family: monospace; background-color: var(--color-bg-light); padding: 1rem; padding-right: 3.5rem; /* Add padding for the button */ border-radius: var(--radius-md); border: 1px solid var(--color-border); overflow-wrap: break-word;">
+                        Varshney, S. (2025). 🕉️ ShlokaAI: The Smart Sanskrit Analysis Platform (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.17506829
+                    </p>
+                </div>
+                <!-- === END OF UPDATED CITATION SECTION === -->
+
                 <h2>About the Creator</h2>
                 <div class="creator-info">
                     <p>This tool was created and is maintained by <strong>Sparsh Varshney</strong>, a BAMS Student and Ayurvedic Researcher.</p>
                     <p>
                         <strong>ORCID:</strong> <a href="https://orcid.org/0009-0004-7835-0673" target="_blank" rel="noopener">0009-0004-7835-0673</a><br>
                         <strong>Website:</strong> <a href="https://www.amidhaayurveda.com/p/about.html" target="_blank" rel="noopener">Amidha Ayurveda</a><br>
+                        <strong>GitHub:</strong> <a href="https://github.com/sciencewithsaucee-sudo/ShlokaAI" target="_blank" rel="noopener">sciencewithsaucee-sudo/ShlokaAI</a><br>
                         <strong>Contact:</strong> <a href="mailto:sparsh@amidhaayurveda.com">sparsh@amidhaayurveda.com</a>
                     </p>
                 </div>
@@ -898,7 +934,7 @@
         let resultsChart = null;
         let currentLang = 'en'; // Language state
 
-        // --- Translation Dictionary (v19.8) ---
+        // --- Translation Dictionary (v19.8.2) ---
         const TRANSLATIONS = {
             // Hero
             heroTitle: { en: 'ShlokaAI', hi: '\u0936\u094D\u0932\u094B\u0915AI' },
@@ -977,6 +1013,7 @@
             modalAllScores: { en: 'All Scores', hi: '\u0938\u092D\u0940 \u0938\u094D\u0915\u094B\u0930' },
             modalShlokaContext: { en: 'Shloka Context', hi: '\u0936\u094D\u0932\u094B\u0915 \u0938\u0902\u0926\u0930\u094D\u092D' },
             modalCopyBtn: { en: 'Copy Text', hi: '\u091F\u0947\u0915\u094D\u0938\u094D\u091F \u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902' },
+            copyBtn: { en: 'Copy', hi: '\u0915\u0949\u092A\u0940 \u0915\u0930\u0947\u0902' },
 
             // Errors
             errorConceptName: { en: '* Please enter both a Concept Name and at least one Synonym.', hi: '* \u0915\u0943\u092A\u092F\u093E \u0905\u0935\u0927\u093E\u0930\u0923\u093E \u0915\u093E \u0928\u093E\u092E \u0914\u0930 \u0915\u092E \u0938\u0947 \u0915\u092E \u090F\u0915 \u0938\u092E\u093E\u0928\u093E\u0930\u094D\u0925\u0940 \u0936\u092C\u094D\u0926 \u0926\u0930\u094D\u091C \u0915\u0930\u0947\u0902\u0964' },
@@ -985,8 +1022,8 @@
             errorLoadMap: { en: 'Error loading map: Invalid JSON file.', hi: '\u092E\u0948\u092A \u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0924\u094D\u0930\u0941\u091F\u093F: \u0905\u092E\u093E\u0928\u094D\u092F JSON \u092B\u093C\u093E\u0907\u0932\u0964' },
             errorNoText: { en: '* Please paste text or upload a .txt file.', hi: '* \u0915\u0943\u092A\u092F\u093E \u091F\u0947\u0915\u094D\u0938\u094D\u091F \u092A\u0947\u0938\u094D\u091F \u0915\u0930\u0947\u0902 \u092F\u093E .txt \u092B\u093C\u093E\u0907\u0932 \u0905\u092A\u0932\u094B\u0921 \u0915\u0930\u0947\u0902\u0964' },
             errorNoShlokas: { en: '* No shlokas were found (missing dandas or line breaks).', hi: '* \u0915\u094B\u0908 \u0936\u094D\u0932\u094B\u0915 \u0928\u0939\u0940\u0902 \u092E\u093F\u0932\u093E (\u0926\u0902\u0921 \u092F\u093E \u0932\u093E\u0907\u0928 \u092C\u094D\u0930\u0947\u0915 \u0917\u093E\u092F\u092C \u0939\u0948\u0902)\u0964' },
-            errorCopy: { en: 'Copied to clipboard!', hi: '\u0915\u094D\u0932\u093F\u092A\u092C\u094B\u0930\u094D\u0921 \u092E\u0947\u0902 \u0915\u0949\u092A\u0940 \u0915\u093F\u092F\u093E \u0917\u092F\u093E!' },
-            errorCopyFail: { en: 'Failed to copy.', hi: '\u0915\u0949\u092A\u0940 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0935\u093F\u092B\u0932\u0964' }
+            errorCopy: { en: 'Copied!', hi: '\u0915\u0949\u092A\u0940 \u0915\u093F\u092F\u093E \u0917\u092F\u093E!' },
+            errorCopyFail: { en: 'Failed!', hi: '\u0935\u093F\u092B\u0932!' }
         };
 
         // --- Concept Templates ---
@@ -1026,7 +1063,7 @@
             "pancha_mahabhuta": {
                 "Akasha": ["आकाश", "ākāśa", "akasha"], "Vayu": ["वायु", "vāyu", "vayu"],
                 "Agni (Mahabhuta)": ["अग्नि", "agni", "tejas"], "Jala": ["जल", "jala", "āp", "ap"],
-                "Prithvi": ["पृथ्वी", "pṛthvī", "prithvi"]
+                "Prithvi": [" पृथ्वी", "pṛthvī", "prithvi"]
             },
             "agni": {
                 "Agni": ["अग्नि", "agni"], "Jatharagni": ["जठराग्नि", "jatharagni"],
@@ -1108,6 +1145,7 @@
         const modalCopyBtn = document.getElementById('modal-copy-btn');
         const modalShlokaBefore = document.getElementById('modal-shloka-before');
         const modalShlokaAfter = document.getElementById('modal-shloka-after');
+        const copyCitationBtn = document.getElementById('copy-citation-btn'); // New element
 
 
         // --- Attach Event Listeners ---
@@ -1158,6 +1196,7 @@
             }
         });
         modalCopyBtn.addEventListener('click', copyModalText);
+        copyCitationBtn.addEventListener('click', copyCitation); // New listener
 
         // --- Language Toggle Function ---
         function toggleLanguage() {
@@ -1668,8 +1707,8 @@
             
             // Sort by count descending and take top 10
             const sortedConcepts = Object.entries(conceptCounts)
-                                      .sort(([,a],[,b]) => b - a);
-                                      
+                                        .sort(([,a],[,b]) => b - a);
+                                        
             const top10Concepts = sortedConcepts.slice(0, 10);
             
             // If more than 10, group the rest into "Others"
@@ -1914,25 +1953,63 @@
                 document.body.removeChild(textArea);
                 
                 if (successful) {
-                    showCopyFeedback(TRANSLATIONS.errorCopy[currentLang], true);
+                    showGenericCopyFeedback(modalCopyBtn, TRANSLATIONS.errorCopy[currentLang], true);
                 } else {
-                    showCopyFeedback(TRANSLATIONS.errorCopyFail[currentLang], false);
+                    showGenericCopyFeedback(modalCopyBtn, TRANSLATIONS.errorCopyFail[currentLang], false);
                 }
             } catch (err) {
-                 showCopyFeedback(TRANSLATIONS.errorCopyFail[currentLang], false);
+                 showGenericCopyFeedback(modalCopyBtn, TRANSLATIONS.errorCopyFail[currentLang], false);
             }
         }
         
-        function showCopyFeedback(message, success) {
-            const originalText = modalCopyBtn.textContent;
-            modalCopyBtn.textContent = message;
-            modalCopyBtn.disabled = true;
-            modalCopyBtn.style.background = success ? 'var(--color-primary)' : 'var(--color-danger)';
+        // New function to copy citation
+        function copyCitation() {
+            const textToCopy = document.getElementById('citation-text').textContent.trim();
+            try {
+                // Use execCommand as clipboard.writeText can fail in iFrames
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                textArea.style.position = "fixed";
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    showGenericCopyFeedback(copyCitationBtn, TRANSLATIONS.errorCopy[currentLang], true);
+                } else {
+                    showGenericCopyFeedback(copyCitationBtn, TRANSLATIONS.errorCopyFail[currentLang], false);
+                }
+            } catch (err) {
+                showGenericCopyFeedback(copyCitationBtn, TRANSLATIONS.errorCopyFail[currentLang], false);
+            }
+        }
+
+        // Renamed and generalized the feedback function
+        function showGenericCopyFeedback(buttonElement, message, success) {
+            const originalHTML = buttonElement.innerHTML; // Store innerHTML to keep icon
+            const originalBg = buttonElement.style.background;
+            const originalColor = buttonElement.style.color;
+            const originalBorder = buttonElement.style.borderColor;
+
+            buttonElement.textContent = message; // Set text only
+            buttonElement.disabled = true;
+            buttonElement.style.background = success ? 'var(--color-primary)' : 'var(--color-danger)';
+            buttonElement.style.color = '#ffffff'; // Ensure text is white
+            buttonElement.style.borderColor = success ? 'var(--color-primary)' : 'var(--color-danger)';
             
             setTimeout(() => {
-                 modalCopyBtn.textContent = decodeHtmlEntities(TRANSLATIONS.modalCopyBtn[currentLang]);
-                 modalCopyBtn.disabled = false;
-                 modalCopyBtn.style.background = '';
+                 // Restore original content
+                 buttonElement.innerHTML = originalHTML;
+                 buttonElement.disabled = false;
+                 // Reset styles
+                 buttonElement.style.background = originalBg;
+                 buttonElement.style.color = originalColor;
+                 buttonElement.style.borderColor = originalBorder;
             }, 2000);
         }
 
